@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sparkles, Zap, Shield, Cpu, ArrowRight, XCircle, Rocket, AlertCircle } from 'lucide-react';
 import ApiSandbox from '../components/ApiSandbox';
-import MainWebsiteModal from '../components/MainWebsiteModal';
 
 interface ErrorModalProps {
   error: string;

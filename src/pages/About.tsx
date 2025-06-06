@@ -141,7 +141,7 @@ const About = () => {
                       <div className="relative rounded-full overflow-hidden w-20 h-20">
                         <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 dark:from-purple-400 dark:to-pink-400 opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
                         <img
-                          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/385.png"
+                          src="res/ahmad.png"
                           alt="Ahmad Shahid"
                           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                         />
@@ -177,7 +177,7 @@ const About = () => {
                       <div className="relative rounded-full overflow-hidden w-20 h-20">
                         <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 dark:from-blue-400 dark:to-cyan-400 opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
                         <img
-                          src="https://github.com/OE-LUCIFER.png"
+                          src="res/affan.png"
                           alt="Affan"
                           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                         />

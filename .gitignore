@@ -4,7 +4,3 @@ node_modules/
 build/
 .qodo
 Jarvis-Roadmap/
-.env.local
-.env
-.env.*
-!.env.example

@@ -26,7 +26,7 @@ const About = () => {
                       <div className="absolute -inset-1 bg-gradient-premium from-light-primary-500 to-light-accent-500 dark:from-dark-primary-400 dark:to-dark-accent-400 rounded-xl opacity-50 group-hover:opacity-70 blur transition-all duration-500"></div>
                       <div className="relative aspect-square rounded-xl overflow-hidden">
                         <img
-                          src="res/me.JPG"
+                          src="https://hxqiiulotzjpqlsxqlel.supabase.co/storage/v1/object/public/extra//ME.JPG"
                           alt="Muhammad Gohar"
                           className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                         />
@@ -141,7 +141,7 @@ const About = () => {
                       <div className="relative rounded-full overflow-hidden w-20 h-20">
                         <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 dark:from-purple-400 dark:to-pink-400 opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
                         <img
-                          src="res/ahmad.png"
+                          src="https://hxqiiulotzjpqlsxqlel.supabase.co/storage/v1/object/public/extra//ahmad.png"
                           alt="Ahmad Shahid"
                           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                         />
@@ -177,7 +177,7 @@ const About = () => {
                       <div className="relative rounded-full overflow-hidden w-20 h-20">
                         <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 dark:from-blue-400 dark:to-cyan-400 opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
                         <img
-                          src="res/affan.png"
+                          src="https://hxqiiulotzjpqlsxqlel.supabase.co/storage/v1/object/public/extra//affan.png"
                           alt="Affan"
                           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                         />

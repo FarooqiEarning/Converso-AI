@@ -113,7 +113,7 @@ function Layout() {
       </div>
       <div className="flex flex-col">
         <span className="text-xl font-bold bg-gradient-premium from-light-primary-500 to-light-accent-500 dark:from-dark-primary-400 dark:to-dark-accent-400 bg-clip-text text-transparent">
-          Sree.shop
+          Converso AI
         </span>
         <span className="text-[10px] text-light-text-tertiary dark:text-dark-text-tertiary leading-none">
           Unlimited AI Power
@@ -199,12 +199,12 @@ function Layout() {
                   {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                 </button>
                 <a
-                  href="https://github.com/SreejanPersonal/sree-shop"
+                  href="https://api.whatsapp.com/send?phone=923164525711"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg bg-light-bg/80 dark:bg-dark-bg-secondary/80 hover:bg-light-bg-secondary dark:hover:bg-dark-bg-tertiary transition-colors"
                 >
-                  <Github className="w-5 h-5" />
+                  <Whatsapp className="w-5 h-5" />
                 </a>
               </div>
             </nav>
@@ -416,30 +416,12 @@ function Layout() {
               </p>
               <div className="mt-6 flex flex-wrap gap-4">
                 <a
-                  href="https://github.com/SreejanPersonal/ai4free-wrapper"
+                  href="hhttps://api.whatsapp.com/send?phone=923164525711"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-light-text-tertiary hover:text-light-text dark:text-dark-text-tertiary dark:hover:text-dark-text transition-colors"
                 >
-                  <Github className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://youtube.com/@devsdocode"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-light-text-tertiary hover:text-red-600 dark:text-dark-text-tertiary dark:hover:text-red-400 transition-colors"
-                >
-                  <Youtube className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://t.me/devsdocode"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-light-text-tertiary hover:text-[#229ED9] dark:text-dark-text-tertiary dark:hover:text-[#229ED9] transition-colors"
-                >
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                  </svg>
+                  <Whatsapp className="w-5 h-5" />
                 </a>
                 <a
                   href="https://instagram.com/sree.shades_"
@@ -448,14 +430,6 @@ function Layout() {
                   className="text-light-text-tertiary hover:text-pink-600 dark:text-dark-text-tertiary dark:hover:text-pink-400 transition-colors"
                 >
                   <Instagram className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://linkedin.com/in/developer-sreejan"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-light-text-tertiary hover:text-blue-600 dark:text-dark-text-tertiary dark:hover:text-blue-400 transition-colors"
-                >
-                  <Linkedin className="w-5 h-5" />
                 </a>
               </div>
             </div>
@@ -476,22 +450,6 @@ function Layout() {
                 </Link>
               </div>
 
-              <div className="mt-6 md:mt-0">
-                <a
-                  href="https://buymeacoffee.com/devsdocode"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#FFDD00] hover:bg-[#FFDD00]/90 transition-colors shadow-premium-sm hover:shadow-premium-md"
-                >
-                  <img
-                    src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
-                    alt="Buy me a coffee"
-                    className="h-4"
-                  />
-                  <span className="text-black font-semibold text-sm">Buy me a coffee</span>
-                </a>
-              </div>
-
               <p className="mt-6 text-sm text-light-text-tertiary dark:text-dark-text-tertiary">
                 © {new Date().getFullYear()} Sree.shop. All rights reserved.
               </p>
@@ -508,22 +466,6 @@ function Layout() {
           transform: `translateY(-${buttonsOffset}px)`
         }}
       >
-        <button
-          onClick={() => setIsMainWebsiteModalOpen(true)}
-          className="group relative mb-4 block"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl blur-xl opacity-75 group-hover:opacity-100 animate-pulse"></div>
-          <div className="relative px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-xl text-white shadow-xl flex items-center gap-3 transform hover:scale-105 transition-all duration-300">
-            <div className="p-1 bg-white/20 rounded-lg">
-              <ExternalLink className="w-4 h-4" />
-            </div>
-            <span className="font-medium">Visit Main Website</span>
-            <div className="absolute -top-1 -right-1 w-3 h-3">
-              <div className="absolute inset-0 bg-yellow-400 rounded-full animate-ping"></div>
-              <div className="absolute inset-0 bg-yellow-400 rounded-full"></div>
-            </div>
-          </div>
-        </button>
 
         <button
           onClick={() => setIsBetaModalOpen(true)}
@@ -538,23 +480,6 @@ function Layout() {
             <div className="absolute -top-1 -right-1 w-3 h-3">
               <div className="absolute inset-0 bg-blue-400 rounded-full animate-ping"></div>
               <div className="absolute inset-0 bg-blue-400 rounded-full"></div>
-            </div>
-          </div>
-        </button>
-
-        <button
-          onClick={() => setIsJarvisModalOpen(true)}
-          className="group relative block"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-teal-600 rounded-xl blur-xl opacity-75 group-hover:opacity-100 animate-pulse"></div>
-          <div className="relative px-4 py-3 bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700 rounded-xl text-white shadow-xl flex items-center gap-3 transform hover:scale-105 transition-all duration-300" style={{ minWidth: '210px' }}>
-            <div className="p-1 bg-white/20 rounded-lg">
-              <Bot className="w-4 h-4" />
-            </div>
-            <span className="font-medium">Jarvis AI Assistant</span>
-            <div className="absolute -top-1 -right-1 w-3 h-3">
-              <div className="absolute inset-0 bg-green-400 rounded-full animate-ping"></div>
-              <div className="absolute inset-0 bg-green-400 rounded-full"></div>
             </div>
           </div>
         </button>

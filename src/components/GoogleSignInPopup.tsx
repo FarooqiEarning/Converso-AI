@@ -169,7 +169,7 @@ const GoogleSignInPopup: React.FC<GoogleSignInPopupProps> = ({
                 <div className="flex items-center gap-2 mb-2">
                   <Sparkles className="w-5 h-5 text-purple-500 dark:text-purple-400" />
                   <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
-                    Welcome to Sree.shop
+                    Welcome to Converso AI
                   </h2>
                 </div>
                 <p className="mt-1 text-light-text-primary/90 dark:text-dark-text-primary/90 font-medium tracking-wide">

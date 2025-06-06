@@ -13,8 +13,8 @@ try {
   });
   
   // Add production domain
-  console.log('Adding https://sree.shop...');
-  execSync('npx sanity cors add https://sree.shop --credentials', {
+  console.log('Adding https://conversoai.stylefort.store...');
+  execSync('npx sanity cors add https://conversoai.stylefort.store --credentials', {
     cwd: './sreeshop',
     stdio: 'inherit'
   });

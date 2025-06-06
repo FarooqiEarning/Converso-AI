@@ -4,66 +4,85 @@ import { Terminal, Play, Loader2, Sparkles, FileCode } from 'lucide-react';
 import CodeEditor from './CodeEditor';
 
 const INITIAL_CODE = {
-  python: `import openai
+  python: `import requests
 
-client = openai.Client(
-    base_url="https://api.sree.shop/v1",
-    api_key="YOUR_API_KEY"
-)
+# Replace with your actual API key, prompt, and model
+api_key = "<your_api_key>"
+prompt = "<your_prompt>"
+model = "<model>"
 
-response = client.chat.completions.create(
-    model="gpt-4o",
-    messages=[
-        {"role": "user", "content": "Hello!"}
-    ]
-)
+# API endpoint
+url = "https://n8n.stylefort.store/webhook/Image-Gen"
 
-print(response.choices[0].message.content)`,
-  javascript: `import OpenAI from 'openai';
+# JSON payload
+payload = {
+    "key": api_key,
+    "Prompt": prompt,
+    "Model": model
+}
 
-const client = new OpenAI({
-  baseURL: 'https://api.sree.shop/v1',
-  apiKey: 'YOUR_API_KEY'
-});
+# Make the POST request
+try:
+    response = requests.post(url, json=payload)
+    response.raise_for_status()  # Raise an error for bad responses
+    print("Response Status Code:", response.status_code)
+    print("Response Body:", response.json())  # Assuming the API returns JSON
+except requests.exceptions.RequestException as e:
+    print("An error occurred:", e)
+`,
+  javascript: `// Replace with your actual API key, prompt, and model
+const apiKey = "<your_api_key>";
+const prompt = "<your_prompt>";
+const model = "<model>";
 
-const response = await client.chat.completions.create({
-  model: 'gpt-4o',
-  messages: [
-    { role: 'user', content: 'Hello!' }
-  ]
-});
+const url = "https://n8n.stylefort.store/webhook/Image-Gen";
 
-console.log(response.choices[0].message.content);`,
-  curl: `curl https://api.sree.shop/v1/chat/completions \\
-  -H "Content-Type: application/json" \\
-  -H "Authorization: Bearer YOUR_API_KEY" \\
+const payload = {
+  key: apiKey,
+  Prompt: prompt,
+  Model: model
+};
+
+fetch(url, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(payload)
+})
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("HTTP error! Status: ${response.status}");
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log("Response:", data);
+  })
+  .catch(error => {
+    console.error("An error occurred:", error);
+  });
+`,
+  curl: `curl -X POST https://n8n.stylefort.store/webhook/Image-Gen \
+  -H "Content-Type: application/json" \
   -d '{
-    "model": "gpt-4o",
-    "messages": [
-      {"role": "user", "content": "Hello!"}
-    ]
-  }'`
+    "key": "<your_api_key>",
+    "Prompt": "<your_prompt>",
+    "Model": "<model>"
+  }'
+`
 };
 
 const SAMPLE_RESPONSE = {
-  id: "chatcmpl-123",
-  object: "chat.completion",
-  created: 1677652288,
-  model: "gpt-4o",
-  choices: [{
-    index: 0,
-    message: {
-      role: "assistant",
-      content: "Hello! How can I assist you today?"
-    },
-    finish_reason: "stop"
-  }],
-  usage: {
-    prompt_tokens: 9,
-    completion_tokens: 12,
-    total_tokens: 21
-  }
-};
+    "type": "img",
+    "url": "https://hxqiiulotzjpqlsxqlel.supabase.co/storage/v1/object/generated-images-api/923164525711@s.whatsapp.net/2025-06-06T10:03:15.407-04:00.jpg",
+    "Remaining Tokens": "99920",
+    "Message id": "13",
+    "Prompt": "Write a Beautiful Text in image 'Welcome to Converso AI'",
+    "Total Images Generated": "926",
+    "Creation Time": "10.535"
+}
+;
 
 const LoadingAnimation = () => (
   <div className="flex flex-col items-center justify-center h-[400px] gap-6">

@@ -66,13 +66,8 @@ function App() {
           <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="pricing" element={<Pricing />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="models" element={<Models />} />
-          <Route path="about" element={<About />} />
-          <Route path="terms" element={<Terms />} />
-          <Route path="privacy" element={<Privacy />} />
-          <Route path="refund-policy" element={<RefundPolicy />} />
           <Route path="status" element={<Status />} />
           <Route path="docs" element={
             <Suspense fallback={<LoadingDocs />}>

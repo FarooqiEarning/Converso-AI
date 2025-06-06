@@ -1,29 +1,48 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { useMemo } from 'react';
-import betaModels from '../utility/models/betaModels.json';
 import ModelCard from '../models/ModelCard';
 import ModelInfoModal from '../models/ModelInfoModal';
-
+import { fetchModels, ModelData } from '../services/modelService';
 
 function Models() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProvider, setSelectedProvider] = useState<string | null>(null);
+  const [models, setModels] = useState<ModelData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedModel, setSelectedModel] = useState<{
     name: string;
     provider: string;
     isPro: boolean;
     isBeta: boolean;
     isImage?: boolean;
+    tokens: number;
   } | null>(null);
+
+  useEffect(() => {
+    const loadModels = async () => {
+      try {
+        setLoading(true);
+        const modelData = await fetchModels();
+        setModels(modelData);
+      } catch (err) {
+        setError('Failed to load models. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadModels();
+  }, []);
 
   const isImageModel = (model: string) => model.includes("f");
 
-  const filterModels = (models: string[]) => {
+  const filterModels = (models: ModelData[]) => {
     if (!searchTerm && !selectedProvider) return models;
     
     return models.filter(model => {
-      const normalizedModel = model.toLowerCase();
+      const normalizedModel = model.name.toLowerCase();
       const normalizedSearch = searchTerm.toLowerCase().trim();
       const searchWords = normalizedSearch.split(/\s+/).filter(word => word.length > 0);
       const matchesSearch = searchWords.length === 0 || 
@@ -33,16 +52,42 @@ function Models() {
     });
   };
 
-  const filteredBetaModels = useMemo(() => 
-    filterModels(betaModels)
-  , [searchTerm, selectedProvider]);
+  const filteredModels = useMemo(() => 
+    filterModels(models)
+  , [models, searchTerm, selectedProvider]);
 
-  const betaImageModels = useMemo(() => 
-    filteredBetaModels.filter(model => isImageModel(model))
-  , [filteredBetaModels]);
+  const imageModels = useMemo(() => 
+    filteredModels.filter(model => isImageModel(model.name))
+  , [filteredModels]);
 
-  const noResults =
-    filteredBetaModels.length === 0;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 dark:border-white mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading models...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <p className="text-red-600 dark:text-red-400 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const noResults = filteredModels.length === 0;
 
   return (
     <div className="py-16 px-4">
@@ -95,14 +140,14 @@ function Models() {
           )}
         </div>
 
-        {/* Beta Tier Section */}
-        {filteredBetaModels.length > 0 && (
+        {/* Models Section */}
+        {imageModels.length > 0 && (
           <div className="mb-16 relative">
             <div className="pt-6 pb-4 mb-8">
               <h2 className="text-3xl font-bold text-yellow-800 dark:text-yellow-400">Stable API</h2>
               <div className="flex items-center gap-2 mt-2">
                 <span className="px-3 py-1 text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400 rounded-full">
-                  {filteredBetaModels.length} models
+                  {imageModels.length} models
                 </span>
                 <span className="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 rounded-full">
                   Get Free 1000 Tokens
@@ -110,31 +155,31 @@ function Models() {
               </div>
             </div>
 
-            {betaImageModels.length > 0 && (
-              <div>
-                <h3 className="text-xl font-semibold text-blue-800 dark:text-blue-400 mb-4">
-                  Image Generation Models ({betaImageModels.length})
-                </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
-                  {betaImageModels.map((model: string) => (
-                    <ModelCard 
-                      key={model} 
-                      model={model} 
-                      provider="Stable API"
-                      isPro={true} 
-                      isBeta={false} 
-                      onClick={() => setSelectedModel({
-                        name: model,
-                        provider: "Stable API",
-                        isPro: true,
-                        isBeta: false,
-                        isImage: false
-                      })}
-                    />
-                  ))}
-                </div>
+            <div>
+              <h3 className="text-xl font-semibold text-blue-800 dark:text-blue-400 mb-4">
+                Image Generation Models ({imageModels.length})
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+                {imageModels.map((model) => (
+                  <ModelCard 
+                    key={model.name} 
+                    model={model.name} 
+                    provider="Stable API"
+                    isPro={true} 
+                    isBeta={false}
+                    tokens={model.tokens}
+                    onClick={() => setSelectedModel({
+                      name: model.name,
+                      provider: "Stable API",
+                      isPro: true,
+                      isBeta: false,
+                      isImage: false,
+                      tokens: model.tokens
+                    })}
+                  />
+                ))}
               </div>
-            )}
+            </div>
           </div>
         )}
 
@@ -146,6 +191,7 @@ function Models() {
             isPro={selectedModel.isPro}
             isBeta={selectedModel.isBeta}
             isImage={selectedModel.isImage}
+            tokens={selectedModel.tokens}
             onClose={() => setSelectedModel(null)}
           />
         )}

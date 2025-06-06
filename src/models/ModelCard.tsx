@@ -8,10 +8,11 @@ interface ModelCardProps {
   isBeta: boolean;
   isPremium?: boolean;
   provider: string;
+  tokens: number;
   onClick: () => void;
 }
 
-const ModelCard: React.FC<ModelCardProps> = ({ model, isPro, isBeta, isPremium = false, provider, onClick }) => {
+const ModelCard: React.FC<ModelCardProps> = ({ model, isPro, isBeta, isPremium = false, provider, tokens, onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
   const modelName = model.split('/').pop() || model;
   const isImageModel = model.includes("flux-");
@@ -23,8 +24,8 @@ const ModelCard: React.FC<ModelCardProps> = ({ model, isPro, isBeta, isPremium =
           icon: <Gauge className="w-3.5 h-3.5" />
         },
         {
-          name: 'Context',
-          value: 'Original',
+          name: 'Tokens',
+          value: tokens,
           icon: <Brain className="w-3.5 h-3.5" />
         },
         {

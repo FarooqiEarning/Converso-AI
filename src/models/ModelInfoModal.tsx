@@ -24,10 +24,11 @@ interface ModelInfoModalProps {
   isPro: boolean;
   isBeta: boolean;
   isImage?: boolean;
+  tokens: number;
   onClose: () => void;
 }
 
-const ModelInfoModal: React.FC<ModelInfoModalProps> = ({ model, provider, isPro, isBeta, isImage, onClose }) => {
+const ModelInfoModal: React.FC<ModelInfoModalProps> = ({ model, provider, isPro, isBeta, isImage, tokens, onClose }) => {
   const navigate = useNavigate();
 
   const handleViewDocs = () => {
@@ -168,10 +169,10 @@ const ModelInfoModal: React.FC<ModelInfoModalProps> = ({ model, provider, isPro,
                 ) : (
                   <Brain className="w-4 h-4 text-purple-500" />
                 )}
-                <h4 className="text-sm font-medium">{isImage ? 'Type' : 'Context Window'}</h4>
+                <h4 className="text-sm font-medium">{isImage ? 'Type' : 'Token Use Per Image'}</h4>
               </div>
               <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">
-                {isImage ? 'Image' : (isPro ? 'Original' : isBeta ? '32K tokens' : '4K tokens')}
+                {isImage ? 'Image' : (tokens)}
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 {isImage ? 'Output format' : 'Maximum input size'}

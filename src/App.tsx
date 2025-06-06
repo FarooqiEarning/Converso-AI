@@ -1,8 +1,8 @@
 
-import { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy } from 'react';
 import ErrorBoundary from './components/ErrorBoundary';
 import { ErrorProvider } from './contexts/ErrorContext';
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Models from './pages/Models';
@@ -30,22 +30,6 @@ const LoadingDocs = () => (
     </div>
   </div>
 );
-
-// Auth redirect handler component
-const AuthRedirectHandler = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const redirectTo = params.get('redirectTo');
-    if (redirectTo) {
-      navigate(redirectTo);
-    }
-  }, [location, navigate]);
-
-  return null;
-};
 
 function App() {
   return (

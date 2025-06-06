@@ -8,15 +8,12 @@ import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Pricing from './pages/Pricing';
-import Dashboard from './pages/Dashboard';
 import Models from './pages/Models';
 import About from './pages/About';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
-import Status from './pages/Status';
 import ContentHub from './pages/ContentHub';
 import ContentDetail from './pages/ContentDetail';
-import RefundPolicy from './pages/RefundPolicy';
 import ApiKeyManagement from './pages/ApiKeyManagement';
 import BetaApiKeyManagement from './pages/BetaApiKeyManagement';
 

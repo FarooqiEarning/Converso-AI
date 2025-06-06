@@ -19,12 +19,6 @@ function Models() {
     isImage?: boolean;
   } | null>(null);
 
-  const providers = useMemo(() => 
-    Array.from(new Set([
-      ...betaModels.map(getProviderFromModel)
-    ])).sort()
-  , []);
-
   const isImageModel = (model: string) => model.includes("fp-");
 
   const filterModels = (models: string[]) => {
@@ -36,8 +30,7 @@ function Models() {
       const searchWords = normalizedSearch.split(/\s+/).filter(word => word.length > 0);
       const matchesSearch = searchWords.length === 0 || 
         searchWords.every(word => normalizedModel.includes(word));
-      const matchesProvider = !selectedProvider || 
-        getProviderFromModel(model) === selectedProvider;
+      const matchesProvider = !selectedProvider;
       return matchesSearch && matchesProvider;
     });
   };
@@ -133,10 +126,8 @@ function Models() {
                       model={model} 
                       isPro={false} 
                       isBeta={true} 
-                      provider={getProviderFromModel(model)}
                       onClick={() => setSelectedModel({
                         name: model,
-                        provider: getProviderFromModel(model),
                         isPro: false,
                         isBeta: true,
                         isImage: true

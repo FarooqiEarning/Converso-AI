@@ -7,6 +7,7 @@ import {
   Key, 
   Menu, 
   X, 
+  Whatsapp,
   Database, 
   Youtube, 
   Linkedin, 
@@ -152,13 +153,6 @@ function Layout() {
                 >
                   <BookOpen className="w-4 h-4" />
                   Documentation
-                </Link>
-                <Link
-                  to="/status"
-                  className="text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary hover:text-light-primary-600 dark:hover:text-dark-primary-400 transition-colors flex items-center gap-1"
-                >
-                  <Activity className="w-4 h-4" />
-                  Status
                 </Link>
                 <Link
                   to="/content"
@@ -381,20 +375,12 @@ function Layout() {
               
               <div className="flex items-center gap-2">
                 <a
-                  href="https://github.com/SreejanPersonal/Sree-Shop"
+                  href="https://api.whatsapp.com/send?phone=923164525711"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg bg-light-bg-secondary/80 dark:bg-dark-bg-tertiary/80 hover:bg-light-bg-tertiary dark:hover:bg-dark-bg-secondary transition-colors"
                 >
-                  <Github className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://youtube.com/@devsdocode"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-light-bg-secondary/80 dark:bg-dark-bg-tertiary/80 hover:bg-light-bg-tertiary dark:hover:bg-dark-bg-secondary transition-colors"
-                >
-                  <Youtube className="w-5 h-5" />
+                  <Whatsapp className="w-5 h-5" />
                 </a>
               </div>
             </div>
@@ -445,13 +431,10 @@ function Layout() {
                 <Link to="/privacy" className="text-sm text-light-text-tertiary dark:text-dark-text-tertiary hover:text-light-primary-600 dark:hover:text-dark-primary-400">
                   Privacy Policy
                 </Link>
-                <Link to="/refund-policy" className="text-sm text-light-text-tertiary dark:text-dark-text-tertiary hover:text-light-primary-600 dark:hover:text-dark-primary-400">
-                  Refund Policy
-                </Link>
               </div>
 
               <p className="mt-6 text-sm text-light-text-tertiary dark:text-dark-text-tertiary">
-                © {new Date().getFullYear()} Sree.shop. All rights reserved.
+                © {new Date().getFullYear()} Converso AI. All rights reserved.
               </p>
             </div>
           </div>

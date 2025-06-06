@@ -56,178 +56,70 @@ function Documentation() {
 
   const codeExamples: Record<string, CodeExample> = {
     imageGen: {
-      python: `import openai
+      python: `import requests
 
-client = OpenAI(
-    base_url="https://beta.sree.shop/v1",
-    api_key="ddc-beta-xxx"  # Replace with your beta API key
-)
+# Replace with your actual API key, prompt, and model
+api_key = "<your_api_key>"
+prompt = "<your_prompt>"
+model = "<model>"
 
-response = client.images.generate(
-    model="Provider-5/flux-pro",
-    prompt="A beautiful sunset over mountains with vibrant colors",
-    n=1,  # Number of images to generate
-    size="1024x1024"  # Image size
-)
+# API endpoint
+url = "https://n8n.stylefort.store/webhook/Image-Gen"
 
-# Get the image URL
-image_url = response.data[0].url
-print(f"Generated image URL: {image_url}")`,
-      javascript: `import OpenAI from 'openai';
+# JSON payload
+payload = {
+    "key": api_key,
+    "Prompt": prompt,
+    "Model": model
+}
 
-const client = new OpenAI({
-  baseURL: 'https://beta.sree.shop/v1',
-  apiKey: 'ddc-beta-xxx'  // Replace with your beta API key
-});
+# Make the POST request
+try:
+    response = requests.post(url, json=payload)
+    response.raise_for_status()  # Raise an error for bad responses
+    print("Response Status Code:", response.status_code)
+    print("Response Body:", response.json())  # Assuming the API returns JSON
+except requests.exceptions.RequestException as e:
+    print("An error occurred:", e)
+`,
+      javascript: `// Replace with your actual API key, prompt, and model
+const apiKey = "<your_api_key>";
+const prompt = "<your_prompt>";
+const model = "<model>";
 
-const response = await client.images.generate({
-  model: 'Provider-5/flux-pro',
-  prompt: 'A beautiful sunset over mountains with vibrant colors',
-  n: 1,  // Number of images to generate
-  size: '1024x1024'  // Image size
-});
+const url = "https://n8n.stylefort.store/webhook/Image-Gen";
 
-// Get the image URL
-const imageUrl = response.data[0].url;
-console.log(\`Generated image URL: \${imageUrl}\`);`,
-      curl: `curl https://beta.sree.shop/v1/images/generations \\
-  -H "Content-Type: application/json" \\
-  -H "Authorization: Bearer ddc-beta-xxx" \\
+const payload = {
+  key: apiKey,
+  Prompt: prompt,
+  Model: model
+};
+
+fetch(url, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(payload)
+})
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("HTTP error! Status: ${response.status}");
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log("Response:", data);
+  })
+  .catch(error => {
+    console.error("An error occurred:", error);
+  });`,
+      curl: `curl -X POST https://n8n.stylefort.store/webhook/Image-Gen \
+  -H "Content-Type: application/json" \
   -d '{
-    "model": "Provider-5/flux-pro",
-    "prompt": "A beautiful sunset over mountains with vibrant colors",
-    "n": 1,
-    "size": "1024x1024"
-  }'`
-    },
-    basic: {
-      python: `import openai
-
-client = OpenAI(
-    base_url="https://api.sree.shop/v1",
-    api_key="ddc-xxx"  # Replace with your API key
-)
-
-response = client.chat.completions.create(
-    model="gpt-4o",
-    messages=[
-        {"role": "user", "content": "Hello!"}
-    ]
-)
-
-print(response.choices[0].message.content)`,
-      javascript: `import OpenAI from 'openai';
-
-const client = new OpenAI({
-  baseURL: 'https://api.sree.shop/v1',
-  apiKey: 'ddc-xxx'  # Replace with your API key
-});
-
-const response = await client.chat.completions.create({
-  model: 'gpt-4o',
-  messages: [
-    { role: 'user', content: 'Hello!' }
-  ]
-});
-
-console.log(response.choices[0].message.content);`,
-      curl: `curl https://api.sree.shop/v1/chat/completions \\
-  -H "Content-Type: application/json" \\
-  -H "Authorization: Bearer ddc-xxx" \\
-  -d '{
-    "model": "gpt-4o",
-    "messages": [
-      {"role": "user", "content": "Hello!"}
-    ]
-  }'`
-    },
-    streaming: {
-      python: `import openai
-
-client = OpenAI(
-    base_url="https://api.sree.shop/v1",
-    api_key="ddc-xxx"  # Replace with your API key
-)
-
-stream = client.chat.completions.create(
-    model="gpt-4o",
-    messages=[
-        {"role": "user", "content": "Write a story"}
-    ],
-    stream=True
-)
-
-for chunk in stream:
-    if chunk.choices[0].delta.content is not None:
-        print(chunk.choices[0].delta.content, end="")`,
-      javascript: `import OpenAI from 'openai';
-
-const client = new OpenAI({
-  baseURL: 'https://api.sree.shop/v1',
-  apiKey: 'ddc-xxx'  # Replace with your API key
-});
-
-const stream = await client.chat.completions.create({
-  model: 'gpt-4o',
-  messages: [
-    { role: 'user', content: 'Write a story' }
-  ],
-  stream: true
-});
-
-for await (const chunk of stream) {
-  process.stdout.write(chunk.choices[0].delta.content || '');
-}`,
-      curl: `curl https://api.sree.shop/v1/chat/completions \\
-  -H "Content-Type: application/json" \\
-  -H "Authorization: Bearer ddc-xxx" \\
-  -d '{
-    "model": "gpt-4o",
-    "messages": [
-      {"role": "user", "content": "Write a story"}
-    ],
-    "stream": true
-  }'`
-    },
-    beta: {
-      python: `import openai
-
-client = OpenAI(
-    base_url="https://beta.sree.shop/v1",
-    api_key="ddc-beta-xxx"  # Replace with your beta API key
-)
-
-response = client.chat.completions.create(
-    model="DeepSeek-R1",  # Beta model
-    messages=[
-        {"role": "user", "content": "Hello!"}
-    ]
-)
-
-print(response.choices[0].message.content)`,
-      javascript: `import OpenAI from 'openai';
-
-const client = new OpenAI({
-  baseURL: 'https://beta.sree.shop/v1',
-  apiKey: 'ddc-beta-xxx'  # Replace with your beta API key
-});
-
-const response = await client.chat.completions.create({
-  model: 'DeepSeek-R1',  # Beta model
-  messages: [
-    { role: 'user', content: 'Hello!' }
-  ]
-});
-
-console.log(response.choices[0].message.content);`,
-      curl: `curl https://beta.sree.shop/v1/chat/completions \\
-  -H "Content-Type: application/json" \\
-  -H "Authorization: Bearer ddc-beta-xxx" \\
-  -d '{
-    "model": "DeepSeek-R1",
-    "messages": [
-      {"role": "user", "content": "Hello!"}
-    ]
+    "key": "<your_api_key>",
+    "Prompt": "<your_prompt>",
+    "Model": "<model>"
   }'`
     }
   };
@@ -252,10 +144,10 @@ console.log(response.choices[0].message.content);`,
               <div>
                 <h3 className="font-semibold mb-2">Get your API key</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
-                  Join our Telegram group and use the bot to generate your API key.
+                  Send '!api_key' on Converso AI Number At Whatsapp to generate your API key.
                 </p>
                 <a
-                  href="https://t.me/devsdocode"
+                  href="https://api.whatsapp.com/send?phone=923444081558"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium"
@@ -263,48 +155,6 @@ console.log(response.choices[0].message.content);`,
                   Join Telegram Group
                   <ChevronRight className="w-4 h-4" />
                 </a>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <div className="p-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30">
-                <div className="w-4 h-4 text-blue-600 dark:text-blue-400 font-bold">2</div>
-              </div>
-              <div>
-                <h3 className="font-semibold mb-2">Install the client library</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
-                  Use your preferred package manager to install our OpenAI-compatible client.
-                </p>
-                <div className="space-y-3">
-                  <div className="relative">
-                    <div className="absolute top-3 left-3 text-gray-500">$</div>
-                    <div className="flex justify-between items-center bg-gray-100 dark:bg-gray-800 p-3 pl-7 rounded-lg">
-                      <code className="text-sm font-mono">npm install openai</code>
-                      <button 
-                        onClick={() => navigator.clipboard.writeText('npm install openai')}
-                        className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                  <div className="relative">
-                    <div className="absolute top-3 left-3 text-gray-500">$</div>
-                    <div className="flex justify-between items-center bg-gray-100 dark:bg-gray-800 p-3 pl-7 rounded-lg">
-                      <code className="text-sm font-mono">pip install openai</code>
-                      <button 
-                        onClick={() => navigator.clipboard.writeText('pip install openai')}
-                        className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -337,7 +187,7 @@ console.log(response.choices[0].message.content);`,
                 <div className="relative">
                   <CodeEditor
                     language={selectedLanguage}
-                    initialCode={codeExamples.basic[selectedLanguage]}
+                    initialCode={codeExamples.imageGen[selectedLanguage]}
                     theme="dark"
                   />
                 </div>
@@ -472,7 +322,7 @@ console.log(response.choices[0].message.content);`,
                   <h4 className="font-medium text-lg">Stable API</h4>
                   <CodeEditor
                     language={selectedLanguage}
-                    initialCode={codeExamples.basic[selectedLanguage]}
+                    initialCode={codeExamples.imageGen[selectedLanguage]}
                     theme="dark"
                   />
                 </div>
@@ -482,7 +332,7 @@ console.log(response.choices[0].message.content);`,
                   <h4 className="font-medium text-lg">Beta API</h4>
                   <CodeEditor
                     language={selectedLanguage}
-                    initialCode={codeExamples.beta[selectedLanguage]}
+                    initialCode='Comming Soon'
                     theme="dark"
                   />
                 </div>
@@ -509,275 +359,6 @@ console.log(response.choices[0].message.content);`,
       )
     },
     {
-      id: 'endpoints',
-      title: 'API Endpoints',
-      icon: <Globe className="w-4 h-4" />,
-      content: (
-        <div className="space-y-6">
-          <h2 className="text-2xl font-bold mb-4">API Endpoints</h2>
-          
-          <div className="space-y-6">
-            <div className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-900/50 rounded-xl">
-              <div className="text-sm font-mono bg-white dark:bg-gray-800 px-3 py-1 rounded border border-gray-200 dark:border-gray-700">
-                Stable API
-              </div>
-              <code className="text-sm">https://api.sree.shop/v1</code>
-            </div>
-            
-            <div className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-900/50 rounded-xl">
-              <div className="text-sm font-mono bg-white dark:bg-gray-800 px-3 py-1 rounded border border-gray-200 dark:border-gray-700">
-                Beta API
-              </div>
-              <code className="text-sm">https://beta.sree.shop/v1</code>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-xl font-semibold mb-4">Available Endpoints</h3>
-            
-            <div className="space-y-4">
-              {/* Chat Completions */}
-              <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30">
-                      <MessageSquare className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold">Chat Completions</h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Create chat completions</p>
-                    </div>
-                  </div>
-                  <div className="text-sm font-mono bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded">
-                    POST
-                  </div>
-                </div>
-                <div className="bg-blue-50 dark:bg-blue-900/20 px-4 py-2 rounded-lg mb-5 border-l-4 border-blue-500 dark:border-blue-400">
-                  <code className="block text-sm font-bold text-blue-700 dark:text-blue-300">
-                    /chat/completions
-                  </code>
-                </div>
-                
-                <div className="space-y-2 mb-4">
-                  <h5 className="font-medium text-sm inline-flex items-center bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
-                    <span className="text-blue-600 dark:text-blue-400 mr-2">⚙️</span> 
-                    Required Parameters
-                  </h5>
-                  <ul className="text-sm space-y-2 pl-4 border-l-2 border-gray-200 dark:border-gray-700">
-                    <li className="flex items-start gap-2">
-                      <span className="text-blue-600 dark:text-blue-400">•</span>
-                      <div>
-                        <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">model</code>
-                        <span className="text-gray-600 dark:text-gray-400 ml-2">The ID of the model to use</span>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-blue-600 dark:text-blue-400">•</span>
-                      <div>
-                        <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">messages</code>
-                        <span className="text-gray-600 dark:text-gray-400 ml-2">Array of messages in the conversation</span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              
-              {/* Image Generations */}
-              <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-green-100 dark:bg-green-900/30">
-                      <FileCode className="w-5 h-5 text-green-600 dark:text-green-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold">Image Generations</h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Generate images from text prompts</p>
-                    </div>
-                  </div>
-                  <div className="text-sm font-mono bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded">
-                    POST
-                  </div>
-                </div>
-                <div className="bg-green-50 dark:bg-green-900/20 px-4 py-2 rounded-lg mb-5 border-l-4 border-green-500 dark:border-green-400">
-                  <code className="block text-sm font-bold text-green-700 dark:text-green-300">
-                    /images/generations
-                  </code>
-                </div>
-                
-                <div className="space-y-2 mb-4">
-                  <h5 className="font-medium text-sm inline-flex items-center bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
-                    <span className="text-green-600 dark:text-green-400 mr-2">⚙️</span> 
-                    Parameters
-                  </h5>
-                  <ul className="text-sm space-y-2 pl-4 border-l-2 border-gray-200 dark:border-gray-700">
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-600 dark:text-green-400">•</span>
-                      <div>
-                        <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">prompt</code>
-                        <span className="text-gray-600 dark:text-gray-400 ml-2">The text prompt to generate an image from</span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <div className="mt-4">
-                  <h5 className="font-medium text-sm inline-flex items-center bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded mb-2">
-                    <span className="text-green-600 dark:text-green-400 mr-2">📝</span> 
-                    Example
-                  </h5>
-                  <div className="bg-gray-50 dark:bg-gray-900/50 p-3 rounded-lg text-sm font-mono border border-gray-200 dark:border-gray-700 shadow-sm">
-                    {`{
-  "prompt": "A beautiful sunset over mountains"
-}`}
-                  </div>
-                </div>
-              </div>
-              
-              {/* Models */}
-              <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/30">
-                      <Cpu className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold">Models</h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">List available models</p>
-                    </div>
-                  </div>
-                  <div className="text-sm font-mono bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded">
-                    GET/POST
-                  </div>
-                </div>
-                <div className="bg-purple-50 dark:bg-purple-900/20 px-4 py-2 rounded-lg mb-5 border-l-4 border-purple-500 dark:border-purple-400">
-                  <code className="block text-sm font-bold text-purple-700 dark:text-purple-300">
-                    /models
-                  </code>
-                </div>
-              </div>
-              
-              {/* Usage */}
-              <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-amber-100 dark:bg-amber-900/30">
-                      <Settings className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold">Usage</h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Retrieve API usage statistics</p>
-                    </div>
-                  </div>
-                  <div className="text-sm font-mono bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded">
-                    POST
-                  </div>
-                </div>
-                <div className="bg-amber-50 dark:bg-amber-900/20 px-4 py-2 rounded-lg mb-5 border-l-4 border-amber-500 dark:border-amber-400">
-                  <code className="block text-sm font-bold text-amber-700 dark:text-amber-300">
-                    /usage
-                  </code>
-                </div>
-                
-                <div className="space-y-2 mb-4">
-                  <h5 className="font-medium text-sm inline-flex items-center bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
-                    <span className="text-amber-600 dark:text-amber-400 mr-2">⚙️</span> 
-                    Required Parameters
-                  </h5>
-                  <ul className="text-sm space-y-2 pl-4 border-l-2 border-gray-200 dark:border-gray-700">
-                    <li className="flex items-start gap-2">
-                      <span className="text-amber-600 dark:text-amber-400">•</span>
-                      <div>
-                        <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">api_key</code>
-                        <span className="text-gray-600 dark:text-gray-400 ml-2">Your API key</span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <div className="mt-4">
-                  <h5 className="font-medium text-sm inline-flex items-center bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded mb-2">
-                    <span className="text-amber-600 dark:text-amber-400 mr-2">📝</span> 
-                    Example
-                  </h5>
-                  <div className="bg-gray-50 dark:bg-gray-900/50 p-3 rounded-lg text-sm font-mono border border-gray-200 dark:border-gray-700 shadow-sm">
-                    {`{
-  "api_key": "ddc-xxx"
-}`}
-                  </div>
-                </div>
-              </div>
-              
-              {/* Uptime */}
-              <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-indigo-100 dark:bg-indigo-900/30">
-                      <Zap className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold">Uptime Check</h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Check if a specific model is available</p>
-                    </div>
-                  </div>
-                  <div className="text-sm font-mono bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded">
-                    GET
-                  </div>
-                </div>
-                <div className="bg-indigo-50 dark:bg-indigo-900/20 px-4 py-2 rounded-lg mb-5 border-l-4 border-indigo-500 dark:border-indigo-400">
-                  <code className="block text-sm font-bold text-indigo-700 dark:text-indigo-300">
-                    /uptime/&lt;model_id&gt;
-                  </code>
-                </div>
-                
-                <div className="space-y-2 mb-4">
-                  <h5 className="font-medium text-sm inline-flex items-center bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
-                    <span className="text-indigo-600 dark:text-indigo-400 mr-2">🔍</span> 
-                    Path Parameters
-                  </h5>
-                  <ul className="text-sm space-y-2 pl-4 border-l-2 border-gray-200 dark:border-gray-700">
-                    <li className="flex items-start gap-2">
-                      <span className="text-indigo-600 dark:text-indigo-400">•</span>
-                      <div>
-                        <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">model_id</code>
-                        <span className="text-gray-600 dark:text-gray-400 ml-2">The ID of the model to check</span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <div className="mt-4">
-                  <h5 className="font-medium text-sm inline-flex items-center bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded mb-2">
-                    <span className="text-indigo-600 dark:text-indigo-400 mr-2">↩️</span> 
-                    Response
-                  </h5>
-                  <ul className="text-sm space-y-2 pl-4 border-l-2 border-gray-200 dark:border-gray-700">
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-600 dark:text-green-400">•</span>
-                      <div>
-                        <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">200 OK</code>
-                        <span className="text-gray-600 dark:text-gray-400 ml-2">Model is available</span>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-red-600 dark:text-red-400">•</span>
-                      <div>
-                        <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">404</code>
-                        <span className="text-gray-600 dark:text-gray-400 ml-2">Model not supported</span>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-red-600 dark:text-red-400">•</span>
-                      <div>
-                        <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">503</code>
-                        <span className="text-gray-600 dark:text-gray-400 ml-2">No response from provider</span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    },
-    {
       id: 'image-generation',
       title: 'Image Generation',
       icon: <Image className="w-4 h-4" />,
@@ -787,18 +368,6 @@ console.log(response.choices[0].message.content);`,
           <p className="text-gray-600 dark:text-gray-400">
             Generate high-quality images from text prompts using our image generation API.
           </p>
-
-          <div className="p-4 bg-green-50 dark:bg-green-900/30 rounded-xl mb-6">
-            <div className="flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5" />
-              <div>
-                <h3 className="font-semibold mb-1">Beta Feature</h3>
-                <p className="text-sm text-green-800 dark:text-green-200">
-                  Image generation is currently available through our Beta API. You'll need a beta API key to access this feature.
-                </p>
-              </div>
-            </div>
-          </div>
 
           <div className="space-y-6">
             <h3 className="font-semibold text-xl mb-4">Basic Usage</h3>
@@ -846,7 +415,7 @@ console.log(response.choices[0].message.content);`,
               </div>
               <div className="bg-green-50 dark:bg-green-900/20 px-4 py-2 rounded-lg mb-5 border-l-4 border-green-500 dark:border-green-400">
                 <code className="block text-sm font-bold text-green-700 dark:text-green-300">
-                  /images/generations
+                  https://n8n.stylefort.store/webhook/Image-Gen
                 </code>
               </div>
               
@@ -859,14 +428,14 @@ console.log(response.choices[0].message.content);`,
                   <li className="flex items-start gap-2">
                     <span className="text-green-600 dark:text-green-400">•</span>
                     <div>
-                      <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">model</code>
-                      <span className="text-gray-600 dark:text-gray-400 ml-2">The ID of the model to use (e.g., "Provider-5/flux-pro")</span>
+                      <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">key</code>
+                      <span className="text-gray-600 dark:text-gray-400 ml-2">The api key for generating images</span>
                     </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-green-600 dark:text-green-400">•</span>
                     <div>
-                      <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">prompt</code>
+                      <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">Prompt</code>
                       <span className="text-gray-600 dark:text-gray-400 ml-2">The text prompt to generate an image from</span>
                     </div>
                   </li>
@@ -882,22 +451,8 @@ console.log(response.choices[0].message.content);`,
                   <li className="flex items-start gap-2">
                     <span className="text-green-600 dark:text-green-400">•</span>
                     <div>
-                      <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">n</code>
-                      <span className="text-gray-600 dark:text-gray-400 ml-2">Number of images to generate (default: 1)</span>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 dark:text-green-400">•</span>
-                    <div>
-                      <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">size</code>
-                      <span className="text-gray-600 dark:text-gray-400 ml-2">Size of the generated images. Options: "256x256", "512x512", "1024x1024"</span>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 dark:text-green-400">•</span>
-                    <div>
-                      <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">response_format</code>
-                      <span className="text-gray-600 dark:text-gray-400 ml-2">The format in which the generated images are returned. Options: "url", "b64_json"</span>
+                      <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">Model</code>
+                      <span className="text-gray-600 dark:text-gray-400 ml-2">Enter The model name you want to use(e.g., "fpu")</span>
                     </div>
                   </li>
                 </ul>
@@ -910,74 +465,16 @@ console.log(response.choices[0].message.content);`,
                 </h5>
                 <div className="bg-gray-50 dark:bg-gray-900/50 p-3 rounded-lg text-sm font-mono border border-gray-200 dark:border-gray-700 shadow-sm">
                   {`{
-  "created": 1684161139,
-  "data": [
-    {
-      "url": "https://beta.sree.shop/images/generated/example-image-1.png"
-    }
-  ]
-}`}
+    "type": "img",
+    "url": "https://hxqiiulotzjpqlsxqlel.supabase.co/storage/v1/object/generated-images-api/923164525711@s.whatsapp.net/2025-06-06T10:03:15.407-04:00.jpg",
+    "Remaining Tokens": "99920",
+    "Message id": "13",
+    "Prompt": "Write a Beautiful Text in image 'Welcome to Converso AI'",
+    "Total Images Generated": "926",
+    "Creation Time": "10.535"
+}
+`}
                 </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="space-y-4 mt-8">
-            <h3 className="font-semibold text-xl mb-4">Advanced Examples</h3>
-            
-            <div className="grid sm:grid-cols-1 gap-6">
-              <div className="space-y-4">
-                <h4 className="font-medium text-lg">Multiple Images</h4>
-                <CodeEditor
-                  language={selectedLanguage}
-                  initialCode={{
-                    python: `import openai
-
-client = OpenAI(
-    base_url="https://beta.sree.shop/v1",
-    api_key="ddc-beta-xxx"  # Replace with your beta API key
-)
-
-response = client.images.generate(
-    model="Provider-5/flux-pro",
-    prompt="A futuristic city with flying cars and tall skyscrapers",
-    n=3,  # Generate 3 images
-    size="512x512"
-)
-
-# Print all image URLs
-for i, image in enumerate(response.data):
-    print(f"Image {i+1}: {image.url}")`,
-                    javascript: `import OpenAI from 'openai';
-
-const client = new OpenAI({
-  baseURL: 'https://beta.sree.shop/v1',
-  apiKey: 'ddc-beta-xxx'  // Replace with your beta API key
-});
-
-const response = await client.images.generate({
-  model: 'Provider-5/flux-pro',
-  prompt: 'A futuristic city with flying cars and tall skyscrapers',
-  n: 3,  // Generate 3 images
-  size: '512x512'
-});
-
-// Print all image URLs
-response.data.forEach((image, i) => {
-  console.log(\`Image \${i+1}: \${image.url}\`);
-});`,
-                    curl: `curl https://beta.sree.shop/v1/images/generations \\
-  -H "Content-Type: application/json" \\
-  -H "Authorization: Bearer ddc-beta-xxx" \\
-  -d '{
-    "model": "Provider-5/flux-pro",
-    "prompt": "A futuristic city with flying cars and tall skyscrapers",
-    "n": 3,
-    "size": "512x512"
-  }'`
-                  }[selectedLanguage]}
-                  theme="dark"
-                />
               </div>
             </div>
           </div>
@@ -995,122 +492,6 @@ response.data.forEach((image, i) => {
                   <li>• Store generated images on your own servers for production use</li>
                 </ul>
               </div>
-            </div>
-          </div>
-        </div>
-      )
-    },
-    {
-      id: 'streaming',
-      title: 'Streaming',
-      icon: <Settings className="w-4 h-4" />,
-      content: (
-        <div className="space-y-6">
-          <h2 className="text-2xl font-bold mb-4">Streaming Responses</h2>
-          <p className="text-gray-600 dark:text-gray-400">
-            Get real-time streaming responses from the API. This is useful for creating chat interfaces with typing indicators.
-          </p>
-
-          <div className="p-4 bg-blue-50 dark:bg-blue-900/30 rounded-xl mb-6">
-            <div className="flex items-start gap-3">
-              <HelpCircle className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5" />
-              <div>
-                <h3 className="font-semibold mb-1">Streaming Tips</h3>
-                <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-2">
-                  <li>• Set <code className="bg-blue-100 dark:bg-blue-900/50 px-1.5 py-0.5 rounded">stream=True</code> in your request</li>
-                  <li>• Handle the stream chunks as they arrive</li>
-                  <li>• Remember to properly close the stream when done</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <h3 className="font-semibold text-xl mb-4">Streaming Examples</h3>
-
-            <div className="grid sm:grid-cols-2 gap-6">
-              {/* Stable API */}
-              <div className="space-y-4">
-                <h4 className="font-medium text-lg">Stable API</h4>
-                <CodeEditor
-                  language={selectedLanguage}
-                  initialCode={codeExamples.streaming[selectedLanguage]}
-                  theme="dark"
-                />
-              </div>
-
-              {/* Beta API */}
-              <div className="space-y-4">
-                <h4 className="font-medium text-lg">Beta API</h4>
-                <CodeEditor
-                  language={selectedLanguage}
-                  initialCode={{
-                    python: `import openai
-
-client = OpenAI(
-    base_url="https://beta.sree.shop/v1",
-    api_key="ddc-beta-xxx"  # Replace with your beta API key
-)
-
-stream = client.chat.completions.create(
-    model="DeepSeek-R1",  # Beta model
-    messages=[
-        {"role": "user", "content": "Write a story"}
-    ],
-    stream=True
-)
-
-for chunk in stream:
-    if chunk.choices[0].delta.content is not None:
-        print(chunk.choices[0].delta.content, end="")`,
-                    javascript: `import OpenAI from 'openai';
-
-const client = new OpenAI({
-  baseURL: 'https://beta.sree.shop/v1',
-  apiKey: 'ddc-beta-xxx'  # Replace with your beta API key
-});
-
-const stream = await client.chat.completions.create({
-  model: 'DeepSeek-R1',  # Beta model
-  messages: [
-    { role: 'user', content: 'Write a story' }
-  ],
-  stream: true
-});
-
-for await (const chunk of stream) {
-  process.stdout.write(chunk.choices[0].delta.content || '');
-}`,
-                    curl: `curl https://beta.sree.shop/v1/chat/completions \\
-  -H "Content-Type: application/json" \\
-  -H "Authorization: Bearer ddc-beta-xxx" \\
-  -d '{
-    "model": "DeepSeek-R1",
-    "messages": [
-      {"role": "user", "content": "Write a story"}
-    ],
-    "stream": true
-  }'`
-                  }[selectedLanguage]}
-                  theme="dark"
-                />
-              </div>
-            </div>
-
-            <div className="flex gap-2 justify-center">
-              {(['python', 'javascript', 'curl'] as const).map((lang) => (
-                <button
-                  key={lang}
-                  onClick={() => setSelectedLanguage(lang)}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                    selectedLanguage === lang
-                      ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300'
-                      : 'hover:bg-gray-100 dark:hover:bg-gray-800'
-                  }`}
-                >
-                  {lang.charAt(0).toUpperCase() + lang.slice(1)}
-                </button>
-              ))}
             </div>
           </div>
         </div>
@@ -1136,36 +517,7 @@ for await (const chunk of stream) {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-center gap-2">
                   <Check className="w-4 h-4 text-yellow-600" />
-                  <span>10 RPM rate limit</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-yellow-600" />
-                  <span>32K context window</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-yellow-600" />
                   <span>Latest model versions</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="p-4 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-100 dark:border-purple-800">
-              <div className="flex items-center gap-3 mb-3">
-                <Cpu className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-                <h3 className="font-semibold">Beta Models</h3>
-              </div>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-purple-600" />
-                  <span>DeepSeek-R1</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-purple-600" />
-                  <span>DeepSeek-R1-Distill-Llama-70B</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-purple-600" />
-                  <span>o3-mini</span>
                 </li>
               </ul>
             </div>
@@ -1192,7 +544,7 @@ for await (const chunk of stream) {
 
             <CodeEditor
               language={selectedLanguage}
-              initialCode={codeExamples.beta[selectedLanguage]}
+              initialCode='Comming Soon'
               theme="dark"
             />
           </div>
@@ -1208,12 +560,6 @@ for await (const chunk of stream) {
       title: 'Getting Started',
       icon: <Book className="w-4 h-4" />,
       sections: ['quickstart', 'authentication']
-    },
-    {
-      id: 'core-api',
-      title: 'Core API',
-      icon: <Server className="w-4 h-4" />,
-      sections: ['endpoints', 'streaming']
     },
     {
       id: 'advanced-features',

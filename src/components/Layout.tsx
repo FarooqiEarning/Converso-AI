@@ -26,8 +26,6 @@ import {
 import { useAuth } from '../contexts/AuthContext';
 import ContactModal from './ContactModal';
 import BetaAccessModal from './BetaAccessModal';
-import MainWebsiteModal from './MainWebsiteModal';
-import JarvisModal from './JarvisModal';
 import AuthAlert from './AuthAlert';
 import GoogleSignInPopup from './GoogleSignInPopup';
 import UserMenu from './UserMenu';
@@ -472,17 +470,9 @@ function Layout() {
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}
       />
-      <MainWebsiteModal
-        isOpen={isMainWebsiteModalOpen}
-        onClose={() => setIsMainWebsiteModalOpen(false)}
-      />
       <BetaAccessModal
         isOpen={isBetaModalOpen}
         onClose={() => setIsBetaModalOpen(false)}
-      />
-      <JarvisModal
-        isOpen={isJarvisModalOpen}
-        onClose={() => setIsJarvisModalOpen(false)}
       />
       <AuthAlert 
         show={showAuthAlert}

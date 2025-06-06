@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Heart, Whatsapp, Instagram, Star, Coffee, Github, Code2, Twitter, Globe, Linkedin } from 'lucide-react';
+import { Heart, MessageCircle, Instagram, Star, Coffee, Github, Code2, Twitter, Globe, Linkedin } from 'lucide-react';
 
 interface Contributor {
   github: string;
@@ -67,7 +67,7 @@ const About = () => {
                         rel="noopener noreferrer"
                         className="flex items-center justify-center gap-2 px-6 py-3 bg-[#FFDD00] hover:bg-[#FFDD00]/90 text-black rounded-xl transition-all duration-300 shadow-premium-sm hover:shadow-premium-lg"
                       >
-                        <Whatsapp className="w-5 h-5" />
+                        <MessageCircle className="w-5 h-5" />
                         <span className="font-medium">Contact Me On Whatsapp</span>
                       </a>
                     </div>

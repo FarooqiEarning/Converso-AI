@@ -5,6 +5,7 @@ import { Crown, Sparkles } from 'lucide-react';
 import betaModels from '../utility/models/betaModels.json';
 import ProviderDropdown from '../models/ProviderDropdown';
 import ModelCard from '../models/ModelCard';
+import ModelInfoModal from '../models/ModelInfoModal';
 
 
 function Models() {

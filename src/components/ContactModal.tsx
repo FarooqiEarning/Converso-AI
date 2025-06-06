@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {  Whatapp, Instagram, ArrowUpRight, Crown } from 'lucide-react';
+import {  MessageCircle, Instagram, ArrowUpRight, Crown } from 'lucide-react';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -25,7 +25,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
   const socialLinks = [
     {
       name: 'LinkedIn',
-      icon: <Whatapp className="w-5 h-5" />,
+      icon: <MessageCircle className="w-5 h-5" />,
       href: 'https://api.whatsapp.com/send?phone=923164525711',
       bgColor: 'bg-[#0A66C2]',
       textColor: 'text-white',

@@ -7,7 +7,7 @@ import {
   Key, 
   Menu, 
   X, 
-  Whatsapp,
+  MessageCircle,
   Database, 
   Youtube, 
   Linkedin, 
@@ -196,7 +196,7 @@ function Layout() {
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg bg-light-bg/80 dark:bg-dark-bg-secondary/80 hover:bg-light-bg-secondary dark:hover:bg-dark-bg-tertiary transition-colors"
                 >
-                  <Whatsapp className="w-5 h-5" />
+                  <MessageCircle className="w-5 h-5" />
                 </a>
               </div>
             </nav>
@@ -378,7 +378,7 @@ function Layout() {
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg bg-light-bg-secondary/80 dark:bg-dark-bg-tertiary/80 hover:bg-light-bg-tertiary dark:hover:bg-dark-bg-secondary transition-colors"
                 >
-                  <Whatsapp className="w-5 h-5" />
+                  <MessageCircle className="w-5 h-5" />
                 </a>
               </div>
             </div>
@@ -405,7 +405,7 @@ function Layout() {
                   rel="noopener noreferrer"
                   className="text-light-text-tertiary hover:text-light-text dark:text-dark-text-tertiary dark:hover:text-dark-text transition-colors"
                 >
-                  <Whatsapp className="w-5 h-5" />
+                  <MessageCircle className="w-5 h-5" />
                 </a>
                 <a
                   href="https://instagram.com/sree.shades_"

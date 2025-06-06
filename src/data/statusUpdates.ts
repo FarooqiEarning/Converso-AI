@@ -16,7 +16,6 @@ export const statusUpdates: StatusUpdate[] = [
     time: '09:01 IST',
     message:'The dashboard issue has been resolved. The white screen that was appearing has been fixed, and the dashboard is now fully functional. Thank you for your patience and understanding.',
     type: 'positive',
-    models: ['Dashboard'],
     apiType: 'beta'
   },
   {

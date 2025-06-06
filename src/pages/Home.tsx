@@ -54,7 +54,7 @@ function Home() {
                 {
                   icon: <Zap className="w-6 h-6" />,
                   title: "Fast",
-                  description: "Faster than any other AI API with Converso AI"
+                  description: "Faster than any other AI api provider"
                 },
                 {
                   icon: <Shield className="w-6 h-6" />,

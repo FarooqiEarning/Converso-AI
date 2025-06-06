@@ -6,7 +6,7 @@
     <link rel="icon" type="image/icon" href="res/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Converso AI - API</title>
-    <meta name="description" content="Premium APi For Developer And Users." />
+    <meta name="description" content="Premium api for developer And users." />
     <meta property="og:title" content="Converso AI Api" />
     <meta property="og:description" content="Premium APi For Developer And Users." />
     <meta property="og:type" content="website" />
@@ -15,7 +15,15 @@
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root" style="user-select: none;"></div>
+    <script>
+          document.addEventListener('copy', function(e) {
+        e.preventDefault(); // Prevent the default copy action
+    });
+        document.addEventListener('contextmenu', function(e) {
+        e.preventDefault(); // Prevent the default context menu
+    });
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

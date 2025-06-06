@@ -11,7 +11,17 @@ export default defineConfig(({ mode }) => ({
     mode === 'development' && componentTagger(),
   ].filter(Boolean),
   optimizeDeps: {
-    exclude: ['lucide-react'],
+    include: ['react', 'react-dom'],
+    exclude: ['lucide-react']
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+        }
+      }
+    }
   },
   server: {
     host: "::",

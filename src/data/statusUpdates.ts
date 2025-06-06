@@ -13,9 +13,9 @@ export const statusUpdates: StatusUpdate[] = [
     id: 'reactivation-1',
     date: 'Jun 6',
     time: '12:00 IST',
-    message: 'Converso AI has been successfully reactivated with enhanced stability and performance improvements. All systems are operational and ready for use.',
+    message: 'Converso AI has been successfully reactivated with enhanced stability and performance improvements. All services are operational.',
     type: 'positive',
-    models: ['System'],
+    models: ['core-system', 'api-service', 'web-interface'],
     apiType: 'stable'
   }
 ];

@@ -26,7 +26,7 @@ const About = () => {
                       <div className="absolute -inset-1 bg-gradient-premium from-light-primary-500 to-light-accent-500 dark:from-dark-primary-400 dark:to-dark-accent-400 rounded-xl opacity-50 group-hover:opacity-70 blur transition-all duration-500"></div>
                       <div className="relative aspect-square rounded-xl overflow-hidden">
                         <img
-                          src="res/me.jpg"
+                          src="res/me.JPG"
                           alt="Muhammad Gohar"
                           className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                         />

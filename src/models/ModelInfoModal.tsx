@@ -175,7 +175,7 @@ const ModelInfoModal: React.FC<ModelInfoModalProps> = ({ model, provider, isPro,
                 {isImage ? 'Image' : (tokens)}
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                {isImage ? 'Output format' : 'Maximum input size'}
+                {isImage ? 'Output format' : 'Tokens used per Image Generation'}
               </p>
             </div>
           </div>

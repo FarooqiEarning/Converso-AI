@@ -4,18 +4,12 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { ErrorProvider } from './contexts/ErrorContext';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Layout from './components/Layout';
-import { AuthProvider } from './contexts/AuthContext';
-import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
-import Pricing from './pages/Pricing';
 import Models from './pages/Models';
 import About from './pages/About';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
-import ContentHub from './pages/ContentHub';
 import ContentDetail from './pages/ContentDetail';
-import ApiKeyManagement from './pages/ApiKeyManagement';
-import BetaApiKeyManagement from './pages/BetaApiKeyManagement';
 
 // Lazy load Documentation component
 const Documentation = lazy(() => import('./pages/Documentation'));
@@ -58,38 +52,22 @@ function App() {
     <ErrorBoundary>
       <ErrorProvider>
         <Router>
-          <AuthProvider>
-          <AuthRedirectHandler />
           <Routes>
-        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="models" element={<Models />} />
+          <Route path="about" element={<About />} />
+          <Route path="terms" element={<Terms />} />
+          <Route path="privacy" element={<Privacy />} />
           <Route path="docs" element={
             <Suspense fallback={<LoadingDocs />}>
               <Documentation />
             </Suspense>
           } />
-          <Route path="content" element={<ContentHub />} />
           <Route path="content/:id" element={<ContentDetail />} />
-          <Route 
-            path="api-keys" 
-            element={
-              <ProtectedRoute>
-                <ApiKeyManagement />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="beta-api-keys" 
-            element={
-              <ProtectedRoute>
-                <BetaApiKeyManagement />
-              </ProtectedRoute>
-            } 
-          />
+          <Route path="*" element={<div className="text-center text-gray-500 max-w-4xl mx-auto m-96">Page not found</div>} />
           </Route>
         </Routes>
-          </AuthProvider>
         </Router>
       </ErrorProvider>
     </ErrorBoundary>

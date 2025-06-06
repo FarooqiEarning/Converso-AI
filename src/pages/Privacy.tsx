@@ -1,14 +1,6 @@
-import React, { useState } from 'react';
-import { Shield, Lock, Eye, FileText, Server, Users, HelpCircle, ChevronDown, Github, Youtube, Linkedin, Instagram } from 'lucide-react';
-
-// Define types for FAQ items
-interface FAQItem {
-  question: string;
-  answer: string;
-}
+import { Shield, Lock, Eye, Users } from 'lucide-react';
 
 function Privacy() {
-  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen py-16 px-4 overflow-hidden">

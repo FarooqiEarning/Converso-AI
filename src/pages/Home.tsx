@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Sparkles, Zap, Shield, Cpu, ArrowRight, XCircle, Rocket, AlertCircle } from 'lucide-react';
+import { Sparkles, Zap, Shield, Cpu, XCircle } from 'lucide-react';
 import ApiSandbox from '../components/ApiSandbox';
 
 interface ErrorModalProps {
   error: string;
-  onClose: () => void;
-}
-
-interface InfoModalProps {
   onClose: () => void;
 }
 
@@ -31,72 +26,7 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ error, onClose }) => (
 );
 
 function Home() {
-  const [apiKey, setApiKey] = useState('');
-  const [isValidating, setIsValidating] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [apiType, setApiType] = useState<'stable' | 'beta'>('beta');
-  const [showStableApiInfo, setShowStableApiInfo] = useState(false);
-  const navigate = useNavigate();
-
-  const validateApiKey = async (key: string) => {
-    try {
-      const baseUrl = apiType === 'beta' ? 'https://beta.sree.shop' : 'https://api.sree.shop';
-      const response = await fetch(`${baseUrl}/v1/usage`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ api_key: key }),
-      });
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          throw new Error('Invalid API key. Please check your credentials and try again.');
-        }
-        throw new Error('Failed to validate API key. Please try again later.');
-      }
-
-      // If we get here, the API key is valid
-      sessionStorage.setItem('apiKey', key);
-      return true;
-    } catch (err) {
-      if (err instanceof Error && err.message === 'Failed to fetch') {
-        throw new Error('Network error. Please check your connection and try again.');
-      }
-      throw err;
-    }
-  };
-
-  const handleDashboardAccess = async () => {
-    if (!apiKey.trim()) {
-      const input = document.getElementById('api-key-input');
-      input?.classList.add('animate-shake');
-      setTimeout(() => input?.classList.remove('animate-shake'), 500);
-      return;
-    }
-
-    if (apiType === 'stable') {
-      setShowStableApiInfo(true);
-      return;
-    }
-
-    setIsValidating(true);
-    setError(null);
-
-    try {
-      const isValid = await validateApiKey(apiKey.trim());
-      if (isValid) {
-        navigate('/dashboard');
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to validate API key');
-      const input = document.getElementById('api-key-input');
-      input?.classList.add('animate-shake');
-      setTimeout(() => input?.classList.remove('animate-shake'), 500);
-    } finally {
-      setIsValidating(false);
-    }
-  };
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex flex-col">
@@ -110,12 +40,11 @@ function Home() {
             </div>
             
             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Unlimited AI Power, Forever Free
+              Unlimited AI Power, Forever
             </h1>
             
             <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 max-w-2xl mx-auto">
-              Access 100+ AI models with no hidden limits. Start building now with our generous free tier,
-              or upgrade to Pro for the price of a coffee ☕️
+              Access AI models with no hidden limits. Start building now with our AI API.
             </p>
 
 
@@ -124,13 +53,13 @@ function Home() {
               {[
                 {
                   icon: <Zap className="w-6 h-6" />,
-                  title: "Truly Unlimited",
-                  description: "No hidden limits. Use the API freely with 3 RPM rate limit"
+                  title: "Fast",
+                  description: "Faster than any other AI API with Converso AI"
                 },
                 {
                   icon: <Shield className="w-6 h-6" />,
                   title: "Premium Models",
-                  description: "Access fp, fpu."
+                  description: "Access All Models with no limits"
                 },
                 {
                   icon: <Cpu className="w-6 h-6" />,
@@ -160,7 +89,6 @@ function Home() {
       </section>
 
       {error && <ErrorModal error={error} onClose={() => setError(null)} />}
-      {showStableApiInfo && <StableApiInfoModal onClose={() => setShowStableApiInfo(false)} />}
     </div>
   );
 }

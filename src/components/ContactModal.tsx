@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {  MessageCircle, Instagram, ArrowUpRight, Crown } from 'lucide-react';
+import {  MessageCircle, Instagram, ArrowUpRight, Crown, X } from 'lucide-react';
 
 interface ContactModalProps {
   isOpen: boolean;

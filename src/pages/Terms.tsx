@@ -1,5 +1,4 @@
-
-import { Shield, AlertCircle, Check, ExternalLink } from 'lucide-react';
+import { Shield, AlertCircle, Check } from 'lucide-react';
 import { useEffect } from 'react';
 
 function Terms() {

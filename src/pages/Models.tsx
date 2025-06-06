@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { Search, X } from 'lucide-react';
 import { useMemo } from 'react';
-import { Crown, Sparkles } from 'lucide-react';
 import betaModels from '../utility/models/betaModels.json';
-import ProviderDropdown from '../models/ProviderDropdown';
 import ModelCard from '../models/ModelCard';
 import ModelInfoModal from '../models/ModelInfoModal';
 
@@ -19,7 +17,7 @@ function Models() {
     isImage?: boolean;
   } | null>(null);
 
-  const isImageModel = (model: string) => model.includes("fp-");
+  const isImageModel = (model: string) => model.includes("f");
 
   const filterModels = (models: string[]) => {
     if (!searchTerm && !selectedProvider) return models;
@@ -44,9 +42,7 @@ function Models() {
   , [filteredBetaModels]);
 
   const noResults =
-    filteredBetaModels.length === 0 && 
-    filteredPaidModels.premium.length === 0 && 
-    filteredPaidModels.standard.length === 0;
+    filteredBetaModels.length === 0;
 
   return (
     <div className="py-16 px-4">
@@ -124,13 +120,15 @@ function Models() {
                     <ModelCard 
                       key={model} 
                       model={model} 
-                      isPro={false} 
-                      isBeta={true} 
+                      provider="Stable API"
+                      isPro={true} 
+                      isBeta={false} 
                       onClick={() => setSelectedModel({
                         name: model,
-                        isPro: false,
-                        isBeta: true,
-                        isImage: true
+                        provider: "Stable API",
+                        isPro: true,
+                        isBeta: false,
+                        isImage: false
                       })}
                     />
                   ))}

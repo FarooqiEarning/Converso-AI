@@ -1,33 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Heart, MessageCircle, Instagram, Star, Coffee, Github, Code2, Twitter, Globe, Linkedin } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Heart, MessageCircle, Instagram, Send } from 'lucide-react';
 
-interface Contributor {
-  github: string;
-  role: string;
-  description: string;
-  skills: string[];
-}
-
-const contributors: Contributor[] = [
-  {
-    github: "springmusk026",
-    role: "Backend Developer",
-    description: "Building robust and scalable backend systems",
-    skills: ["Node.js", "PostgreSQL", "System Design", "API Development"]
-  },
-  {
-    github: "imChronos",
-    role: "Core Developer",
-    description: "Driving innovation in AI infrastructure",
-    skills: ["Python", "FastAPI", "DevOps", "AI/ML"]
-  },
-  {
-    github: "nileshpatil6",
-    role: "Integration Specialist",
-    description: "Ensuring seamless AI integration",
-    skills: ["Python", "AI Integration", "Testing", "Documentation"]
-  }
-];
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -65,10 +38,10 @@ const About = () => {
                         href="https://api.whatsapp.com/send?phone=923164525711"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 px-6 py-3 bg-[#FFDD00] hover:bg-[#FFDD00]/90 text-black rounded-xl transition-all duration-300 shadow-premium-sm hover:shadow-premium-lg"
+                        className="flex items-center justify-center gap-2 px-6 py-3 bg-[#25D366] hover:bg-[#128C7E]/90 text-black rounded-xl transition-all duration-300 shadow-premium-sm hover:shadow-premium-lg"
                       >
                         <MessageCircle className="w-5 h-5" />
-                        <span className="font-medium">Contact Me On Whatsapp</span>
+                        <span className="font-medium">Contact On Whatsapp</span>
                       </a>
                     </div>
 
@@ -77,9 +50,17 @@ const About = () => {
                         href="https://www.instagram.com/muhammadgohar_official/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center p-3 bg-[#0A66C2] hover:bg-[#0A66C2]/90 text-white rounded-xl transition-all duration-300 flex-1"
+                        className="flex items-center justify-center p-3 bg-[#D62976] hover:bg-[#962FBF]/90 text-white rounded-xl transition-all duration-300 flex-1"
                       >
                         <Instagram className="w-5 h-5" />
+                      </a>
+                      <a
+                        href="https://t.me/MuhammadGohar_Official"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center p-3 bg-[#24A1DE] hover:bg-[#128C7E]/90 text-white rounded-xl transition-all duration-300 flex-1"
+                      >
+                        <Send className="w-5 h-5" />
                       </a>
                     </div>
                   </div>
@@ -91,12 +72,12 @@ const About = () => {
                       <span>Developer and Owner Of Converso AI</span>
                     </div>
                     
-                    <h1 className="text-4xl sm:text-5xl font-bold text-light-text dark:text-dark-text mb-4">
+                    <h1 className="text-3xl sm:text-4xl font-bold text-light-text dark:text-dark-text mb-4">
                       Muhammad Gohar
                       <span className="text-xl sm:text-2xl text-light-text-secondary dark:text-dark-text-secondary ml-3">(Owner)</span>
                     </h1>
                     
-                    <p className="text-lg text-light-text-secondary dark:text-dark-text-secondary mb-8 leading-relaxed">
+                    <p className="text-1xl text-light-text-secondary dark:text-dark-text-secondary mb-8 leading-relaxed">
                       Muhammad Gohar is the owner, developer, and trainer of Converso AI. With a strong interest in computers and AI, he is dedicated to building innovative solutions and sharing his knowledge with others.
                     </p>
 

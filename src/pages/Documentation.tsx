@@ -8,18 +8,11 @@ import {
   Sparkles,
   X,
   Rocket,
-  Globe,
-  Settings,
   AlertCircle,
-  HelpCircle,
   Check,
-  FileCode,
   Zap,
-  MessageSquare,
-  Cpu,
   Image,
   Book,
-  Server,
   Lightbulb
 } from 'lucide-react';
 import CodeEditor from '../components/CodeEditor';
@@ -147,12 +140,12 @@ fetch(url, {
                   Send '!api_key' on Converso AI Number At Whatsapp to generate your API key.
                 </p>
                 <a
-                  href="https://api.whatsapp.com/send?phone=923444081558"
+                  href="https://api.whatsapp.com/send?phone=923444081558&text=!api_key"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium"
                 >
-                  Join Telegram Group
+                  Get Api key on WhatsApp
                   <ChevronRight className="w-4 h-4" />
                 </a>
               </div>
@@ -218,7 +211,7 @@ fetch(url, {
                 Production-ready API with stable models and reliable performance.
               </p>
               <div className="font-mono text-sm bg-white dark:bg-gray-900/50 p-2 rounded">
-                ddc-xxx
+                mg-xxx
               </div>
             </div>
 
@@ -231,7 +224,7 @@ fetch(url, {
                 Access to latest models and features in beta testing.
               </p>
               <div className="font-mono text-sm bg-white dark:bg-gray-900/50 p-2 rounded">
-                ddc-beta-xxx
+                mg-beta-xxx
               </div>
             </div>
           </div>

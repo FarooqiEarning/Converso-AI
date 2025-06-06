@@ -1,48 +1,22 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Outlet, Link, useLocation } from 'react-router-dom';
 import { 
-  Github, 
   Moon, 
-  Sun, 
-  Key, 
+  Sun,
   Menu, 
   X, 
   MessageCircle,
   Database, 
-  Youtube, 
-  Linkedin, 
   Instagram, 
-  CreditCard, 
-  Activity, 
   Sparkles, 
-  ExternalLink,
-  BookOpen,
-  Bot,
-  LogIn,
-  User,
-  Settings,
-  LogOut
+  BookOpen
 } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
-import ContactModal from './ContactModal';
-import BetaAccessModal from './BetaAccessModal';
-import AuthAlert from './AuthAlert';
-import GoogleSignInPopup from './GoogleSignInPopup';
-import UserMenu from './UserMenu';
-
 function Layout() {
   const [darkMode, setDarkMode] = useState(() => {
     const savedMode = localStorage.getItem('darkMode');
     return savedMode !== null ? JSON.parse(savedMode) : true;
   });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [showAuthAlert, setShowAuthAlert] = useState(false);
-  const [showSignInPopup, setShowSignInPopup] = useState(false);
-  const navigate = useNavigate();
-  const { user, signIn } = useAuth();
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [isBetaModalOpen, setIsBetaModalOpen] = useState(false);
-  const [isJarvisModalOpen, setIsJarvisModalOpen] = useState(false);
   const [buttonsOffset, setButtonsOffset] = useState(0);
   const location = useLocation();
 
@@ -88,14 +62,6 @@ function Layout() {
     document.documentElement.classList.toggle('dark');
   };
 
-  const handleCreateApiKey = useCallback(() => {
-    if (!user) {
-      setShowAuthAlert(true);
-      return;
-    }
-    navigate('/api-keys');
-  }, [user, navigate]);
-
   const Logo = () => (
     <Link to="/" className="flex items-center gap-2 group">
       <div className="relative">
@@ -131,13 +97,6 @@ function Layout() {
             <nav className="hidden md:flex items-center gap-8">
               <div className="flex items-center gap-6">
                 <Link
-                  to="/pricing"
-                  className="text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary hover:text-light-primary-600 dark:hover:text-dark-primary-400 transition-colors flex items-center gap-1"
-                >
-                  <CreditCard className="w-4 h-4" />
-                  Pricing
-                </Link>
-                <Link
                   to="/models"
                   className="text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary hover:text-light-primary-600 dark:hover:text-dark-primary-400 transition-colors flex items-center gap-1"
                 >
@@ -151,37 +110,9 @@ function Layout() {
                   <BookOpen className="w-4 h-4" />
                   Documentation
                 </Link>
-                <Link
-                  to="/content"
-                  className="text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary hover:text-light-primary-600 dark:hover:text-dark-primary-400 transition-colors flex items-center gap-1"
-                >
-                  <Youtube className="w-4 h-4" />
-                  Content Hub
-                </Link>
-              </div>
-
-              <div className="flex items-center gap-4">
-                {user ? (
-                  <button
-                    onClick={handleCreateApiKey}
-                    className="px-4 py-2 bg-gradient-premium from-light-primary-500 to-light-accent-500 dark:from-dark-primary-500 dark:to-dark-accent-500 text-white rounded-lg hover:from-light-primary-600 hover:to-light-accent-600 dark:hover:from-dark-primary-600 dark:hover:to-dark-accent-600 transition-all shadow-premium-lg hover:shadow-premium-xl flex items-center gap-2"
-                  >
-                    <Key className="w-4 h-4" />
-                    Create API Key
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => setShowSignInPopup(true)}
-                    className="px-4 py-2 bg-gradient-premium from-light-primary-500 to-light-accent-500 dark:from-dark-primary-500 dark:to-dark-accent-500 text-white rounded-lg hover:from-light-primary-600 hover:to-light-accent-600 dark:hover:from-dark-primary-600 dark:hover:to-dark-accent-600 transition-all shadow-premium-lg hover:shadow-premium-xl flex items-center gap-2"
-                  >
-                    <LogIn className="w-4 h-4" />
-                    Sign In
-                  </button>
-                )}
               </div>
 
               <div className="flex items-center gap-4 border-l border-light-primary-100/50 dark:border-dark-primary-700/50 pl-4">
-                {user && <UserMenu user={user} />}
                 <button
                   onClick={toggleDarkMode}
                   className="p-2 rounded-lg bg-light-bg/80 dark:bg-dark-bg-secondary/80 hover:bg-light-bg-secondary dark:hover:bg-dark-bg-tertiary transition-colors"
@@ -232,60 +163,9 @@ function Layout() {
             </button>
           </div>
           
-          {/* User profile section when logged in */}
-          {user && (
-            <div className="p-4 border-b border-light-primary-100/50 dark:border-dark-primary-700/50">
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <div className="absolute -inset-1 bg-gradient-premium from-light-primary-500/30 to-light-accent-500/30 dark:from-dark-primary-400/30 dark:to-dark-accent-400/30 rounded-full blur opacity-80"></div>
-                  <img
-                    src={user.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`}
-                    alt="Profile"
-                    className="relative w-12 h-12 rounded-full border-2 border-light-primary-500/50 dark:border-dark-primary-400/50"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`;
-                    }}
-                  />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-base font-medium text-light-text dark:text-dark-text truncate">
-                    {user.displayName}
-                  </p>
-                  <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary truncate">
-                    {user.email}
-                  </p>
-                </div>
-                
-                {/* Hidden UserMenu component for mobile */}
-                <div className="hidden">
-                  <UserMenu user={user} data-user-menu-mobile="true" />
-                </div>
-              </div>
-              
-              {/* Mobile avatar button */}
-              <div className="mt-4 flex justify-center">
-                <div className="relative inline-block">
-                  <UserMenu user={user} isMobile={true} />
-                </div>
-              </div>
-            </div>
-          )}
-          
           {/* Main navigation */}
           <div className="flex-1 overflow-y-auto py-4 px-3">
             <div className="space-y-1">
-              <Link
-                to="/pricing"
-                className="flex items-center gap-3 px-4 py-3 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-gradient-to-r hover:from-light-primary-500/10 hover:to-light-accent-500/10 dark:hover:from-dark-primary-400/10 dark:hover:to-dark-accent-400/10 transition-all duration-200"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-light-primary-500/20 to-light-accent-500/20 dark:from-dark-primary-400/20 dark:to-dark-accent-400/20">
-                  <CreditCard className="w-4 h-4 text-light-primary-600 dark:text-dark-primary-400" />
-                </div>
-                <span className="font-medium">Pricing</span>
-              </Link>
-              
               <Link
                 to="/models"
                 className="flex items-center gap-3 px-4 py-3 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-gradient-to-r hover:from-light-primary-500/10 hover:to-light-accent-500/10 dark:hover:from-dark-primary-400/10 dark:hover:to-dark-accent-400/10 transition-all duration-200"
@@ -307,54 +187,6 @@ function Layout() {
                 </div>
                 <span className="font-medium">Documentation</span>
               </Link>
-              
-              <Link
-                to="/status"
-                className="flex items-center gap-3 px-4 py-3 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-gradient-to-r hover:from-light-primary-500/10 hover:to-light-accent-500/10 dark:hover:from-dark-primary-400/10 dark:hover:to-dark-accent-400/10 transition-all duration-200"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-light-primary-500/20 to-light-accent-500/20 dark:from-dark-primary-400/20 dark:to-dark-accent-400/20">
-                  <Activity className="w-4 h-4 text-light-primary-600 dark:text-dark-primary-400" />
-                </div>
-                <span className="font-medium">Status</span>
-              </Link>
-              
-              <Link
-                to="/content"
-                className="flex items-center gap-3 px-4 py-3 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-gradient-to-r hover:from-light-primary-500/10 hover:to-light-accent-500/10 dark:hover:from-dark-primary-400/10 dark:hover:to-dark-accent-400/10 transition-all duration-200"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-light-primary-500/20 to-light-accent-500/20 dark:from-dark-primary-400/20 dark:to-dark-accent-400/20">
-                  <Youtube className="w-4 h-4 text-light-primary-600 dark:text-dark-primary-400" />
-                </div>
-                <span className="font-medium">Content Hub</span>
-              </Link>
-            </div>
-            
-            <div className="mt-6 pt-6 border-t border-light-primary-100/50 dark:border-dark-primary-700/50">
-              {user ? (
-                <button
-                  onClick={() => {
-                    handleCreateApiKey();
-                    setMobileMenuOpen(false);
-                  }}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-premium from-light-primary-500 to-light-accent-500 dark:from-dark-primary-500 dark:to-dark-accent-500 text-white hover:from-light-primary-600 hover:to-light-accent-600 dark:hover:from-dark-primary-600 dark:hover:to-dark-accent-600 transition-all shadow-premium-lg hover:shadow-premium-xl"
-                >
-                  <Key className="w-4 h-4" />
-                  <span className="font-medium">Create API Key</span>
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    setShowSignInPopup(true);
-                    setMobileMenuOpen(false);
-                  }}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-premium from-light-primary-500 to-light-accent-500 dark:from-dark-primary-500 dark:to-dark-accent-500 text-white hover:from-light-primary-600 hover:to-light-accent-600 dark:hover:from-dark-primary-600 dark:hover:to-dark-accent-600 transition-all shadow-premium-lg hover:shadow-premium-xl"
-                >
-                  <LogIn className="w-4 h-4" />
-                  <span className="font-medium">Sign In</span>
-                </button>
-              )}
             </div>
           </div>
           
@@ -399,7 +231,7 @@ function Layout() {
               </p>
               <div className="mt-6 flex flex-wrap gap-4">
                 <a
-                  href="hhttps://api.whatsapp.com/send?phone=923164525711"
+                  href="https://api.whatsapp.com/send?phone=923164525711"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-light-text-tertiary hover:text-light-text dark:text-dark-text-tertiary dark:hover:text-dark-text transition-colors"
@@ -407,7 +239,7 @@ function Layout() {
                   <MessageCircle className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://instagram.com/sree.shades_"
+                  href="https://www.instagram.com/muhammadgohar_official"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-light-text-tertiary hover:text-pink-600 dark:text-dark-text-tertiary dark:hover:text-pink-400 transition-colors"
@@ -448,15 +280,15 @@ function Layout() {
       >
 
         <button
-          onClick={() => setIsBetaModalOpen(true)}
+          onClick={() => window.open("https://api.whatsapp.com/send?phone=923164525711", "_blank")}
           className="group relative mb-4 block"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl blur-xl opacity-75 group-hover:opacity-100 animate-pulse"></div>
           <div className="relative px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-xl text-white shadow-xl flex items-center gap-3 transform hover:scale-105 transition-all duration-300">
             <div className="p-1 bg-white/20 rounded-lg">
-              <Sparkles className="w-4 h-4" />
+              <MessageCircle className="w-4 h-4" />
             </div>
-            <span className="font-medium">Join Beta Program</span>
+            <span className="font-medium">Contact</span>
             <div className="absolute -top-1 -right-1 w-3 h-3">
               <div className="absolute inset-0 bg-blue-400 rounded-full animate-ping"></div>
               <div className="absolute inset-0 bg-blue-400 rounded-full"></div>
@@ -464,24 +296,6 @@ function Layout() {
           </div>
         </button>
       </div>
-
-      <ContactModal
-        isOpen={isContactModalOpen}
-        onClose={() => setIsContactModalOpen(false)}
-      />
-      <BetaAccessModal
-        isOpen={isBetaModalOpen}
-        onClose={() => setIsBetaModalOpen(false)}
-      />
-      <AuthAlert 
-        show={showAuthAlert}
-        onClose={() => setShowAuthAlert(false)}
-      />
-      <GoogleSignInPopup
-        isOpen={showSignInPopup}
-        onClose={() => setShowSignInPopup(false)}
-        onSignIn={signIn}
-      />
     </div>
   );
 }

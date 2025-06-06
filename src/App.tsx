@@ -64,7 +64,6 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="models" element={<Models />} />
-          <Route path="status" element={<Status />} />
           <Route path="docs" element={
             <Suspense fallback={<LoadingDocs />}>
               <Documentation />

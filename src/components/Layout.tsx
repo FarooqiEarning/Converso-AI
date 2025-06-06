@@ -41,7 +41,6 @@ function Layout() {
   const navigate = useNavigate();
   const { user, signIn } = useAuth();
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [isMainWebsiteModalOpen, setIsMainWebsiteModalOpen] = useState(false);
   const [isBetaModalOpen, setIsBetaModalOpen] = useState(false);
   const [isJarvisModalOpen, setIsJarvisModalOpen] = useState(false);
   const [buttonsOffset, setButtonsOffset] = useState(0);

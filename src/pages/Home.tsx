@@ -32,7 +32,6 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ error, onClose }) => (
 
 function Home() {
   const [apiKey, setApiKey] = useState('');
-  const [isMainWebsiteModalOpen, setIsMainWebsiteModalOpen] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [apiType, setApiType] = useState<'stable' | 'beta'>('beta');
@@ -159,12 +158,6 @@ function Home() {
           <ApiSandbox />
         </div>
       </section>
-
-      {/* Modals */}
-      <MainWebsiteModal
-        isOpen={isMainWebsiteModalOpen}
-        onClose={() => setIsMainWebsiteModalOpen(false)}
-      />
 
       {error && <ErrorModal error={error} onClose={() => setError(null)} />}
       {showStableApiInfo && <StableApiInfoModal onClose={() => setShowStableApiInfo(false)} />}

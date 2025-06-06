@@ -21,9 +21,7 @@ function Models() {
 
   const providers = useMemo(() => 
     Array.from(new Set([
-      ...freeModels.map(getProviderFromModel),
-      ...betaModels.map(getProviderFromModel),
-      ...paidModels.map(getProviderFromModel)
+      ...betaModels.map(getProviderFromModel)
     ])).sort()
   , []);
 
@@ -52,7 +50,7 @@ function Models() {
     filteredBetaModels.filter(model => isImageModel(model))
   , [filteredBetaModels]);
 
-  const noResults = filteredFreeModels.length === 0 && 
+  const noResults =
     filteredBetaModels.length === 0 && 
     filteredPaidModels.premium.length === 0 && 
     filteredPaidModels.standard.length === 0;

@@ -9,6 +9,7 @@ import {
   Database, 
   Instagram, 
   Sparkles, 
+  ShieldCheck, 
   BookOpen
 } from 'lucide-react';
 function Layout() {
@@ -109,6 +110,13 @@ function Layout() {
                 >
                   <BookOpen className="w-4 h-4" />
                   Documentation
+                </Link>
+                <Link
+                  to="/about"
+                  className="text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary hover:text-light-primary-600 dark:hover:text-dark-primary-400 transition-colors flex items-center gap-1"
+                >
+                  <ShieldCheck className="w-4 h-4" />
+                  About
                 </Link>
               </div>
 

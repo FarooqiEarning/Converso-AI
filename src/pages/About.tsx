@@ -155,7 +155,7 @@ const About = () => {
                       The Main Tester & Manager of Converso AI .
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {['Html', 'Css', 'JavaScript'].map((skill, index) => (
+                      {['Html', 'Css', 'JavaScript', 'Photo Editing', 'Graphic Design', 'Video Editing'].map((skill, index) => (
                         <span
                           key={index}
                           className="px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-sm"
@@ -191,7 +191,7 @@ const About = () => {
                       The UI Designer & Admin at Converso AI.
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {['Html', 'Css', 'JavaScript'].map((skill, index) => (
+                      {['Html', 'Css', 'JavaScript','Graphic Design'].map((skill, index) => (
                         <span
                           key={index}
                           className="px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm"

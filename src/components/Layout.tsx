@@ -297,6 +297,7 @@ function Layout() {
           </div>
         </button>
       </div>
+      <Analytics />
     </div>
   );
 }

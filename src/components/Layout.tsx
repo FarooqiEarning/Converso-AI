@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Analytics } from "@vercel/analytics/next"
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { 
   Moon, 

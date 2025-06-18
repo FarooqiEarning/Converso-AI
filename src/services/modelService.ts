@@ -3,7 +3,7 @@ export interface ModelData {
   tokens: number;
 }
 
-const API_BASE_URL = 'https://n8n.stylefort.store/webhook';
+const API_BASE_URL = 'https://jealous-chrystel-mglinks-39b5ef0b.koyeb.app/webhook/models';
 
 export const fetchModels = async (): Promise<ModelData[]> => {
   try {

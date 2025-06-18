@@ -4,23 +4,25 @@ import { Gauge, Brain, Workflow, Rocket, Star, Zap, Image, ChevronDown, Sparkles
 
 interface ModelCardProps {
   model: string;
+  id: string;
   isPro: boolean;
-  isBeta: boolean;
+  isNormal: boolean;
   isPremium?: boolean;
-  provider: string;
   tokens: number;
   onClick: () => void;
 }
 
-const ModelCard: React.FC<ModelCardProps> = ({ model, isPro, isBeta, isPremium = false, provider, tokens, onClick }) => {
+const ModelCard: React.FC<ModelCardProps> = ({ model, isPro, isNormal, isPremium = false, id, tokens, onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
   const modelName = model.split('/').pop() || model;
   const isImageModel = model.includes("flux-");
+  const RPM  = isPro ? 'Unlimited' : isNormal ? '10 RPM' : '3 RPM';
+  const priority = isPro ? 'High' : isNormal ? 'Medium' : 'Normal';
 
   const features =[
         {
           name: 'RPM',
-          value: 'Unlimited',
+          value: RPM,
           icon: <Gauge className="w-3.5 h-3.5" />
         },
         {
@@ -30,7 +32,7 @@ const ModelCard: React.FC<ModelCardProps> = ({ model, isPro, isBeta, isPremium =
         },
         {
           name: 'Priority',
-          value: 'High',
+          value: priority,
           icon: <Workflow className="w-3.5 h-3.5" />
         }
       ];
@@ -52,7 +54,7 @@ const ModelCard: React.FC<ModelCardProps> = ({ model, isPro, isBeta, isPremium =
         accentColor: "bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20",
         cardBg: "bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm" // Semi-transparent background
       };
-    } else if (isBeta) {
+    } else if (isNormal) {
       return {
         gradientHeader: "bg-gradient-to-r from-yellow-100 to-amber-200 dark:from-yellow-900/40 dark:to-amber-800/40",
         borderColor: "border-yellow-300 dark:border-yellow-700",
@@ -109,7 +111,7 @@ const ModelCard: React.FC<ModelCardProps> = ({ model, isPro, isBeta, isPremium =
         {/* Decorative corner accent */}
       <div className="absolute top-0 right-0 w-12 h-12 overflow-hidden">
         <div className={`absolute transform rotate-45 translate-x-4 -translate-y-1 w-16 h-3 ${
-          isBeta ? 'bg-yellow-300 dark:bg-yellow-700' : 
+          isNormal ? 'bg-yellow-300 dark:bg-yellow-700' : 
           isPro ? 'bg-purple-300 dark:bg-purple-700' : 
           'bg-green-300 dark:bg-green-700'
         }`}></div>
@@ -119,7 +121,7 @@ const ModelCard: React.FC<ModelCardProps> = ({ model, isPro, isBeta, isPremium =
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0">
             <div className={`p-1.5 rounded-md ${styles.iconBg} ${styles.iconColor} shadow-sm`}>
-              {isBeta ? <Rocket className="w-4 h-4" /> : isPro ? <Star className="w-4 h-4" /> : <Zap className="w-4 h-4" />}
+              {isNormal ? <Rocket className="w-4 h-4" /> : isPro ? <Star className="w-4 h-4" /> : <Zap className="w-4 h-4" />}
             </div>
             <div className="min-w-0">
               <h3 className="font-semibold text-sm truncate" title={modelName}>
@@ -127,7 +129,7 @@ const ModelCard: React.FC<ModelCardProps> = ({ model, isPro, isBeta, isPremium =
               </h3>
               <div className="flex items-center gap-1">
                 <p className="text-xs text-gray-600 dark:text-gray-400 truncate">
-                  {provider}
+                  {id}
                 </p>
                 {isImageModel && (
                   <span className="inline-flex items-center">
@@ -140,7 +142,7 @@ const ModelCard: React.FC<ModelCardProps> = ({ model, isPro, isBeta, isPremium =
           {/* Badge with sparkling effect for premium models */}
           <div className={`${isPro && isPremium ? 'relative overflow-hidden' : ''}`}>
             <div className={`px-2 py-0.5 text-[10px] font-semibold rounded-full ${styles.badgeBg} ${styles.badgeText} shadow-sm`}>
-              {isBeta ? 'Beta' : isPro ? 'Pro' : 'Free'}
+              {isNormal ? 'Normal' : isPro ? 'Pro' : 'Free'}
             </div>
             {isPro && isPremium && (
               <>
@@ -161,12 +163,6 @@ const ModelCard: React.FC<ModelCardProps> = ({ model, isPro, isBeta, isPremium =
               <Image className="w-3 h-3" />
               <span>Image Generation</span>
             </div>
-            {isBeta && (
-              <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400">
-                <Sparkles className="w-3 h-3" />
-                <span>Limited Time</span>
-              </div>
-            )}
           </div>
         )}
 

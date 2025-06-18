@@ -1,6 +1,10 @@
 export interface ModelData {
+  type: string;
+  provider: string;
   name: string;
+  id: string;
   tokens: number;
+  access: 'free' | 'normal' | 'premium';
 }
 
 const API_BASE_URL = 'https://jealous-chrystel-mglinks-39b5ef0b.koyeb.app/webhook';

@@ -13,9 +13,10 @@ function Models() {
   const [error, setError] = useState<string | null>(null);
   const [selectedModel, setSelectedModel] = useState<{
     name: string;
+    id: string;
     provider: string;
     isPro: boolean;
-    isBeta: boolean;
+    isNormal: boolean;
     isImage?: boolean;
     tokens: number;
   } | null>(null);
@@ -36,29 +37,31 @@ function Models() {
     loadModels();
   }, []);
 
-  const isImageModel = (model: string) => model.includes("f");
-
   const filterModels = (models: ModelData[]) => {
     if (!searchTerm && !selectedProvider) return models;
-    
+
     return models.filter(model => {
       const normalizedModel = model.name.toLowerCase();
       const normalizedSearch = searchTerm.toLowerCase().trim();
       const searchWords = normalizedSearch.split(/\s+/).filter(word => word.length > 0);
-      const matchesSearch = searchWords.length === 0 || 
+      const matchesSearch = searchWords.length === 0 ||
         searchWords.every(word => normalizedModel.includes(word));
       const matchesProvider = !selectedProvider;
       return matchesSearch && matchesProvider;
     });
   };
 
-  const filteredModels = useMemo(() => 
+  const filteredModels = useMemo(() =>
     filterModels(models)
-  , [models, searchTerm, selectedProvider]);
+    , [models, searchTerm, selectedProvider]);
 
-  const imageModels = useMemo(() => 
-    filteredModels.filter(model => isImageModel(model.name))
-  , [filteredModels]);
+  const imageModels = useMemo(() =>
+    filteredModels.filter(model => model.type === 'img')
+    , [filteredModels]);
+
+  const textModels = useMemo(() =>
+    filteredModels.filter(model => model.type === 'text')
+    , [filteredModels]);
 
   if (loading) {
     return (
@@ -76,8 +79,8 @@ function Models() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <p className="text-red-600 dark:text-red-400 mb-4">{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
+          <button
+            onClick={() => window.location.reload()}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             Retry
@@ -140,45 +143,85 @@ function Models() {
           )}
         </div>
 
-        {/* Models Section */}
-        {imageModels.length > 0 && (
+        {textModels.length > 0 && (
           <div className="mb-16 relative">
             <div className="pt-6 pb-4 mb-8">
-              <h2 className="text-3xl font-bold text-yellow-800 dark:text-yellow-400">Stable API</h2>
+              <h2 className="text-3xl font-bold text-blue-800 dark:text-blue-400">Text Models</h2>
               <div className="flex items-center gap-2 mt-2">
-                <span className="px-3 py-1 text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400 rounded-full">
-                  {imageModels.length} models
-                </span>
-                <span className="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 rounded-full">
-                  Get Free 1000 Tokens
+                <span className="px-3 py-1 text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 rounded-full">
+                  {textModels.length} models
                 </span>
               </div>
             </div>
 
-            <div>
-              <h3 className="text-xl font-semibold text-blue-800 dark:text-blue-400 mb-4">
-                Image Generation Models ({imageModels.length})
-              </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
-                {imageModels.map((model) => (
-                  <ModelCard 
-                    key={model.name} 
-                    model={model.name} 
-                    provider="Stable API"
-                    isPro={true} 
-                    isBeta={false}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+              {textModels.map((model) => {
+                let isPro = model.access === 'premium';
+                let isNormal = model.access === 'normal';
+                const id = model.id
+
+                return (
+                  <ModelCard
+                    key={model.name}
+                    model={model.name}
+                    id={model.id}
+                    isPro={isPro}
+                    isNormal={isNormal}
                     tokens={model.tokens}
                     onClick={() => setSelectedModel({
                       name: model.name,
+                      id: id,
                       provider: "Stable API",
-                      isPro: true,
-                      isBeta: false,
+                      isPro: isPro,
+                      isNormal: isNormal,
                       isImage: false,
                       tokens: model.tokens
                     })}
                   />
-                ))}
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Models Section */}
+        {imageModels.length > 0 && (
+          <div className="mb-16 relative">
+            <div className="pt-6 pb-4 mb-8">
+              <h2 className="text-3xl font-bold text-yellow-800 dark:text-yellow-400">Image Models</h2>
+              <div className="flex items-center gap-2 mt-2">
+                <span className="px-3 py-1 text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400 rounded-full">
+                  {imageModels.length} models
+                </span>
               </div>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+              {imageModels.map((model) => {
+                let isPro = model.access === 'premium';
+                let isNormal = model.access === 'normal';
+                const id = model.id
+
+                return (
+                  <ModelCard
+                    key={model.name}
+                    model={model.name}
+                    id={model.id}
+                    isPro={isPro}
+                    isNormal={isNormal}
+                    tokens={model.tokens}
+                    onClick={() => setSelectedModel({
+                      name: model.name,
+                      id: id,
+                      provider: "Stable API",
+                      isPro: isPro,
+                      isNormal: isNormal,
+                      isImage: true,
+                      tokens: model.tokens
+                    })}
+                  />
+                );
+              })}
             </div>
           </div>
         )}
@@ -187,9 +230,10 @@ function Models() {
         {selectedModel && (
           <ModelInfoModal
             model={selectedModel.name}
+            id={selectedModel.id}
             provider={selectedModel.provider}
             isPro={selectedModel.isPro}
-            isBeta={selectedModel.isBeta}
+            isNormal={selectedModel.isNormal}
             isImage={selectedModel.isImage}
             tokens={selectedModel.tokens}
             onClose={() => setSelectedModel(null)}

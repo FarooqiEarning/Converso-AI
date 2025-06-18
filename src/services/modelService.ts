@@ -3,7 +3,7 @@ export interface ModelData {
   tokens: number;
 }
 
-const API_BASE_URL = 'https://jealous-chrystel-mglinks-39b5ef0b.koyeb.app/webhook/models';
+const API_BASE_URL = 'https://jealous-chrystel-mglinks-39b5ef0b.koyeb.app/webhook';
 
 export const fetchModels = async (): Promise<ModelData[]> => {
   try {
